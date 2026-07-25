@@ -85,7 +85,8 @@ Du kannst die Karte direkt über den visuellen Editor in Home Assistant konfigur
 **Zusätzliche Verbraucher:**
 - Du kannst bis zu 5 individuelle Verbraucher (z.B. Auto, Heizung, Pool) mit eigenen Icons und Beschriftungen hinzufügen.
 - **Sensorwert invertieren**: Für jeden Verbraucher verfügbar. Wird der (invertierte) Wert negativ, kehrt sich die Flussanimation um — der Verbraucher speist dann ins Haus ein (z.B. ein zweiter Solar-/Hybrid-Wechselrichter).
-- **Pipe bei geringer Leistung ausblenden**: Jeder Verbraucher kann seine Röhre (und Bubble) unterhalb eines individuellen Watt-Schwellenwerts ausblenden.
+- **Pipe bei geringer Leistung ausblenden**: Blendet unterhalb eines individuellen Watt-Schwellenwerts nur die Verbindungsröhre aus — die Bubble bleibt sichtbar.
+- **Standby-Werte ausblenden**: Optionaler Schwellenwert je Verbraucher (0–100 W), unterhalb dessen der Messwert als 0 W gilt — Geräte im Standby (z.B. 1–3 W) verschwinden damit vollständig (Bubble und Röhre).
 - Verbraucher werden auch in der Kompakten Ansicht (evcc) mit ihren konfigurierten Icons, Beschriftungen und Farben angezeigt.
 
 **Optionen:**
@@ -93,14 +94,17 @@ Du kannst die Karte direkt über den visuellen Editor in Home Assistant konfigur
 - **Neon Glow**: Aktivieren/Deaktivieren des Leuchteffekts.
 - **Donut Chart**: Zeigt den Energiemix als Ring um das Haus an.
 - **Kometenschweif / Gestrichelte Linie**: Ändern Sie den Stil der Flussanimation.
-- **Kompakte Ansicht**: Wechseln Sie zum Balkendiagramm-Layout.
+- **Kompakte Ansicht**: Wechseln Sie zum Balkendiagramm-Layout. Optionen: Detailtabelle, Neon Glow, *Icons in die Klammern setzen* — die Icons wandern aus dem Inneren der Klammern mittig auf die Klammerlinie und unterbrechen sie — sowie *Einspeisung in den Balken aufnehmen* — dabei wandert die Einspeisung als eigenes Segment in den mittleren Balken, und Solar/Batterie zeigen nur noch den im Haus genutzten Anteil.
 - **Horizontale / Diamant-Ansicht**: Alternative Layouts zur Standard-Ansicht — um 90° gedreht (horizontal) oder mit Solar oben, Netz links und Batterie rechts (Diamant).
 - **Boxen statt Kreise**: Stellt die Knoten als Boxen mit runden Ecken statt als Kreise dar.
-- **Farboptionen**: Definieren Sie benutzerdefinierte Farben für jede Quelle und Verbraucher.
+- **Farboptionen**: Definieren Sie benutzerdefinierte Farben für jede Quelle und Verbraucher. Bei aktivierter kompakter Ansicht bietet der Batterie-Tab zwei vollständige Farbzeilen (Ladung und Entladung) mit jeweils Bubble, Pipe, Text, Icon und Secondary.
+
+> **Farbrollen in der kompakten Ansicht:** Jedes Farbfeld hat ein festes Ziel — **Bubble** = Balkensegment, **Pipe** = Klammerlinie, **Icon** = Symbole, **Text** = Wert, **Secondary** = Beschriftung in der Detailliste. Die Klammerlinie folgt weiterhin der Icon-Farbe, solange keine eigene Pipe-Farbe gesetzt ist.
 - **Netz-Import/Export**: Konfigurieren Sie separate oder kombinierte Entitäten.
+- **Netzwert umkehren**: Für Wechselrichter, die Export positiv und Import negativ melden.
 - **Netz-zu-Batterie**: Optionaler direkter Sensor für den Netz-zu-Batterie-Fluss.
 - **Batterie getrennte Sensoren**: Optional separate Sensoren für Batterie-Ladung und -Entladung. 
-- **Sekundäre Sensoren**: Zeigen Sie alternative Werte in den Hauptkreisen an (z.B. Tagesertrag, aktuelle Ladeleistung). 
+- **Sekundäre Sensoren**: Zeigen Sie alternative Werte in den Hauptkreisen an (z.B. Tagesertrag, aktuelle Ladeleistung). Bei den Verbrauchern und beim Gesamtverbrauch lässt sich zusätzlich ein **dritter Sensor** konfigurieren — beide teilen sich eine Zeile, getrennt durch ` / `, und nutzen die Secondary-Farbe.
 
 
 <details>
@@ -132,7 +136,11 @@ Mit der [card_mod](https://github.com/thomasloven/lovelace-card-mod) Integration
 | `--consumer-1-color` | Bubble-Farbe Consumer 1 |
 | `--consumer-2-color` | Bubble-Farbe Consumer 2 |
 | `--consumer-3-color` | Bubble-Farbe Consumer 3 |
-| `--export-color` | Farbe für Export |
+| `--export-color` | Basisfarbe Export (Netz-Kreis beim Einspeisen) |
+| `--pipe-export-color` | Farbe der Export-Röhre (folgt `--export-color`) |
+| `--text-export-color` | Farbe des Export-Werts (folgt `--export-color`) |
+| `--icon-export-color` | Farbe des Export-Icons (folgt `--export-color`) |
+| `--secondary-export-color` | Export-Beschriftung in der Detailliste der kompakten Ansicht (folgt `--text-export-color`) |
 | `--pipe-solar-opacity` | Pipe-Transparenz Solar (0 = unsichtbar, 1 = sichtbar) |
 | `--pipe-grid-opacity` | Pipe-Transparenz Grid (0 = unsichtbar, 1 = sichtbar) |
 | `--pipe-battery-opacity` | Pipe-Transparenz Batterie (0 = unsichtbar, 1 = sichtbar) |
@@ -141,6 +149,38 @@ Mit der [card_mod](https://github.com/thomasloven/lovelace-card-mod) Integration
 | `--pipe-consumer-3-opacity` | Pipe-Transparenz Consumer 3 (0 = unsichtbar, 1 = sichtbar) |
 | `--pipe-consumer-4-opacity` | Pipe-Transparenz Consumer 4 (0 = unsichtbar, 1 = sichtbar) |
 | `--pipe-consumer-5-opacity` | Pipe-Transparenz Consumer 5 (0 = unsichtbar, 1 = sichtbar) |
+| `--battery-charge-color` | Batterie-Ladung, Balkensegment (kompakte Ansicht) |
+| `--pipe-battery-charge-color` | Batterie-Ladung, Klammerlinie (kompakte Ansicht) |
+| `--text-battery-charge-color` | Batterie-Ladung, Wert (kompakte Ansicht) |
+| `--icon-battery-charge-color` | Batterie-Ladung, Icon (kompakte Ansicht) |
+| `--secondary-battery-charge-color` | Batterie-Ladung, Beschriftung in der Detailliste |
+| `--battery-discharge-color` | Batterie-Entladung, Balkensegment (kompakte Ansicht) |
+| `--pipe-battery-discharge-color` | Batterie-Entladung, Klammerlinie (kompakte Ansicht) |
+| `--text-battery-discharge-color` | Batterie-Entladung, Wert (kompakte Ansicht) |
+| `--icon-battery-discharge-color` | Batterie-Entladung, Icon (kompakte Ansicht) |
+| `--secondary-battery-discharge-color` | Batterie-Entladung, Beschriftung in der Detailliste |
+| `--font-size-value` | Schriftgröße des Hauptwerts in den Kreisen (Standard 15px, 17px im Box-Modus) |
+| `--font-size-label` | Schriftgröße der Beschriftung unter dem Icon (Standard 9px) |
+| `--font-size-secondary` | Schriftgröße des zweiten Sensorwerts (Standard 10px, 12px im Box-Modus) |
+| `--font-size-secondary-dual` | Schriftgröße, wenn zweiter **und** dritter Sensor eine Zeile teilen (Standard 8px, 9px im Box-Modus) |
+| `--font-size-flow` | Schriftgröße der Flussraten an den Röhren (Standard 10px) |
+| `--icon-size` | Icon-Größe in den Knoten (Standard 33px) |
+| `--circle-size` | Durchmesser der Kreise, unabhängig vom Zoom (Standard 90px) |
+
+> **Hinweis zu den Größen:** `--font-size-*` und `--icon-size` sind rein optisch und können frei angepasst werden. `--circle-size` hält jeden Knoten auf seinem Ankerpunkt zentriert, die Röhren docken aber weiterhin am Standard-Radius (90px) an — kleine Anpassungen (etwa 80–100px) sehen gut aus, größere lösen die Röhren von den Knoten.
+
+**Beispiel: größere Schrift ohne die ganze Karte zu skalieren** (siehe Discussion #74)
+
+```yaml
+type: custom:power-flux-card
+card_mod:
+  style: |
+    :host {
+      --font-size-value: 19px;
+      --font-size-secondary: 13px;
+      --font-size-flow: 12px;
+    }
+```
 
 ### Beispiel 1: Solar-Icon — grün bei Produktion, grau bei Stillstand
 

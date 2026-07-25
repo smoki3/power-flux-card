@@ -30,7 +30,8 @@ class PowerFluxCardEditor extends LitElement {
         return {
             hass: {},
             _config: { state: true },
-            _subView: { state: true } // Controls which sub-page is open (null = main)
+            _subView: { state: true }, // Controls which sub-page is open (null = main)
+            _openConsumer: { state: true } // Index of the expanded consumer group (null = all collapsed)
         };
     }
 
@@ -74,7 +75,10 @@ class PowerFluxCardEditor extends LitElement {
                 'secondary_solar', 'secondary_grid', 'secondary_battery',
                 'secondary_consumer_1', 'secondary_consumer_2', 'secondary_consumer_3',
                 'secondary_consumer_4', 'secondary_consumer_5',
-                'secondary_house'
+                'secondary_house',
+                'tertiary_consumer_1', 'tertiary_consumer_2', 'tertiary_consumer_3',
+                'tertiary_consumer_4', 'tertiary_consumer_5',
+                'tertiary_house'
             ];
 
             let newConfig = { ...this._config };
@@ -293,15 +297,43 @@ class PowerFluxCardEditor extends LitElement {
         margin-bottom: 12px;
       }
       .consumer-group {
-        padding: 10px;
+        padding: 4px 10px;
         border-radius: 8px;
         border-bottom: 1px solid var(--divider-color);
-        margin-bottom: 12px;
+        margin-bottom: 8px;
+      }
+      .consumer-group.open {
+        padding-bottom: 10px;
+        background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.03);
+      }
+      .consumer-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        cursor: pointer;
+      }
+      .consumer-header:hover .consumer-chevron {
+        color: var(--primary-color);
+      }
+      .consumer-summary {
+        flex: 1;
+        text-align: right;
+        font-size: 0.85em;
+        color: var(--secondary-text-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .consumer-chevron {
+        --mdc-icon-size: 20px;
+        color: var(--secondary-text-color);
+        flex-shrink: 0;
       }
       .consumer-title {
-        font-weight: bold; 
-        margin-bottom: 8px;
+        font-weight: bold;
         color: var(--primary-text-color);
+        white-space: nowrap;
       }
       .separator {
           border-bottom: 1px solid var(--divider-color);
@@ -379,6 +411,12 @@ class PowerFluxCardEditor extends LitElement {
           width: 26px;
           height: 26px;
       }
+      .color-row-title {
+          font-size: 0.9em;
+          font-weight: bold;
+          margin-top: 10px;
+          color: var(--primary-text-color);
+      }
       .option-group {
           border: 1px solid var(--divider-color);
           border-radius: 12px;
@@ -408,6 +446,98 @@ class PowerFluxCardEditor extends LitElement {
           margin-bottom: 4px;
       }
     `;
+    }
+
+    // One configuration block for an additional consumer (1-5)
+    _renderConsumerGroup(idx, defaultColor, entities, entitySelectorSchema, textSelectorSchema, iconSelectorSchema) {
+        const cfg = this._config;
+        const inlineSwitch = (configKey, labelKey) => html`
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
+                <span>${this._localize(labelKey)}</span>
+                <ha-switch
+                    .checked=${cfg[configKey] === true}
+                    .configValue=${configKey}
+                    @change=${this._valueChanged}
+                ></ha-switch>
+            </div>`;
+        const slider = (configKey, labelKey, max, step) => html`
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${{ number: { min: 0, max: max, step: step, mode: "slider" } }}
+                .value=${cfg[configKey] !== undefined ? cfg[configKey] : 0}
+                .configValue=${configKey}
+                .label=${this._localize(labelKey)}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>`;
+
+        const isOpen = this._openConsumer === idx;
+        const entityId = entities[`consumer_${idx}`];
+        const summary = cfg[`consumer_${idx}_label`] || (entityId ? entityId : this._localize('editor.consumer_not_set'));
+
+        return html`
+        <div class="consumer-group ${isOpen ? 'open' : ''}">
+            <div class="consumer-header" @click=${() => this._toggleConsumer(idx)}>
+                <div class="consumer-title" style="color: ${defaultColor};">${this._localize(`editor.consumer_${idx}_title`)}</div>
+                <div class="consumer-summary">${summary}</div>
+                <ha-icon class="consumer-chevron" icon="${isOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'}"></ha-icon>
+            </div>
+            ${!isOpen ? '' : html`
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`consumer_${idx}`], `consumer_${idx}`, this._localize('editor.entity'))}
+
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${textSelectorSchema}
+                .value=${cfg[`consumer_${idx}_label`]}
+                .configValue=${`consumer_${idx}_label`}
+                .label=${this._localize('editor.label')}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>
+
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${iconSelectorSchema}
+                .value=${cfg[`consumer_${idx}_icon`]}
+                .configValue=${`consumer_${idx}_icon`}
+                .label=${this._localize('editor.icon')}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>
+
+            ${inlineSwitch(`invert_consumer_${idx}`, 'editor.invert_consumer')}
+
+            ${inlineSwitch(`consumer_${idx}_standby`, 'editor.consumer_standby')}
+            ${cfg[`consumer_${idx}_standby`] === true ? html`
+                ${slider(`consumer_${idx}_standby_threshold`, 'editor.consumer_standby_threshold', 100, 1)}
+                <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                    ${this._localize('editor.consumer_standby_hint')}
+                </div>` : ''}
+
+            ${inlineSwitch(`consumer_${idx}_hide_pipe`, 'editor.consumer_hide_pipe')}
+            ${cfg[`consumer_${idx}_hide_pipe`] === true
+                ? slider(`consumer_${idx}_pipe_threshold`, 'editor.consumer_pipe_threshold', 2000, 10)
+                : ''}
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
+                <span>${this._localize('editor.consumer_unit_kw')}</span>
+                <ha-switch
+                    .checked=${cfg[`consumer_${idx}_unit_kw`] === true}
+                    .configValue=${`consumer_${idx}_unit_kw`}
+                    @change=${this._valueChanged}
+                ></ha-switch>
+            </div>
+
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`secondary_consumer_${idx}`] || "", `secondary_consumer_${idx}`, this._localize('editor.secondary_sensor'))}
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`tertiary_consumer_${idx}`] || "", `tertiary_consumer_${idx}`, this._localize('editor.tertiary_sensor'))}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                ${this._localize('editor.tertiary_sensor_hint')}
+            </div>
+
+            ${this._renderColorPickerQuint(`color_consumer_${idx}`, `color_pipe_consumer_${idx}`, `color_text_consumer_${idx}`, `color_icon_consumer_${idx}`, `color_secondary_consumer_${idx}`, defaultColor)}
+            `}
+        </div>`;
+    }
+
+    _toggleConsumer(idx) {
+        this._openConsumer = this._openConsumer === idx ? null : idx;
     }
 
     _renderSwitch(configKey, labelKey, checked) {
@@ -535,7 +665,11 @@ class PowerFluxCardEditor extends LitElement {
 
         ${this._renderColorPickerQuint('color_grid', 'color_pipe_grid', 'color_text_grid', 'color_icon_grid', 'color_secondary_grid', '#3b82f6')}
 
-        ${this._renderColorPicker('color_export', this._localize('editor.export_color'), '#ff3333')}
+        <div class="color-row-title">${this._localize('editor.export_color')}</div>
+        ${this._renderColorPickerQuint('color_export', 'color_pipe_export', 'color_text_export', 'color_icon_export', 'color_secondary_export', '#ff3333')}
+        <div style="font-size: 0.8em; color: var(--secondary-text-color);">
+            ${this._localize('editor.export_color_hint')}
+        </div>
 
         <div class="separator"></div>
         
@@ -628,8 +762,18 @@ class PowerFluxCardEditor extends LitElement {
 
         ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_battery || "", 'secondary_battery', this._localize('editor.secondary_sensor'))}
 
-        ${this._renderColorPickerQuint('color_battery', 'color_pipe_battery', 'color_text_battery', 'color_icon_battery', 'color_secondary_battery', '#00ff88')}
-        
+        ${this._config.compact_view === true ? html`
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 8px;">
+                ${this._localize('editor.battery_split_color_hint')}
+            </div>
+            <div class="color-row-title">${this._localize('editor.battery_discharge_color')}</div>
+            ${this._renderColorPickerQuint('color_battery_discharge', 'color_pipe_battery_discharge', 'color_text_battery_discharge', 'color_icon_battery_discharge', 'color_secondary_battery_discharge', '#00ff88')}
+            <div class="color-row-title">${this._localize('editor.battery_charge_color')}</div>
+            ${this._renderColorPickerQuint('color_battery_charge', 'color_pipe_battery_charge', 'color_text_battery_charge', 'color_icon_battery_charge', 'color_secondary_battery_charge', '#00ff88')}
+        ` : html`
+            ${this._renderColorPickerQuint('color_battery', 'color_pipe_battery', 'color_text_battery', 'color_icon_battery', 'color_secondary_battery', '#00ff88')}
+        `}
+
         <div class="separator"></div>
         
         <div class="switch-row">
@@ -694,8 +838,8 @@ class PowerFluxCardEditor extends LitElement {
             <h2>${this._localize('editor.consumers_section')}</h2>
         </div>
 
-        <div class="consumer-group">
-            <div class="consumer-title">${this._localize('editor.house_total_title')}</div>
+        <div class="consumer-group open">
+            <div class="consumer-title" style="padding: 10px 0 8px;">${this._localize('editor.house_total_title')}</div>
             ${this._renderEntitySelector(entitySelectorSchema, entities.house || "", 'house', this._localize('editor.house_sensor_label'))}
              <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px;">
                 ${this._localize('editor.house_sensor_hint')}
@@ -720,319 +864,20 @@ class PowerFluxCardEditor extends LitElement {
             ></ha-selector>
 
             ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_house || "", 'secondary_house', this._localize('editor.secondary_sensor'))}
+            ${this._renderEntitySelector(entitySelectorSchema, entities.tertiary_house || "", 'tertiary_house', this._localize('editor.tertiary_sensor'))}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                ${this._localize('editor.tertiary_sensor_hint')}
+            </div>
             ${this._renderColorPickerQuint('color_house', null, 'color_text_house', 'color_icon_house', 'color_secondary_house', '#ff0080')}
         </div>
 
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #a855f7;">${this._localize('editor.consumer_1_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_1, 'consumer_1', this._localize('editor.entity'))}
-            
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_1_label}
-                .configValue=${'consumer_1_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_1_icon}
-                .configValue=${'consumer_1_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_1 === true}
-                    .configValue=${'invert_consumer_1'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_1_hide_pipe === true}
-                    .configValue=${'consumer_1_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_1_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_1_pipe_threshold !== undefined ? this._config.consumer_1_pipe_threshold : 0}
-                .configValue=${'consumer_1_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_1_unit_kw === true}
-                    .configValue=${'consumer_1_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_1 || "", 'secondary_consumer_1', this._localize('editor.secondary_sensor'))}
-
-            ${this._renderColorPickerQuint('color_consumer_1', 'color_pipe_consumer_1', 'color_text_consumer_1', 'color_icon_consumer_1', 'color_secondary_consumer_1', '#a855f7')}
-        </div>
-
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #f97316;">${this._localize('editor.consumer_2_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_2, 'consumer_2', this._localize('editor.entity'))}
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_2_label}
-                .configValue=${'consumer_2_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_2_icon}
-                .configValue=${'consumer_2_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_2 === true}
-                    .configValue=${'invert_consumer_2'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_2_hide_pipe === true}
-                    .configValue=${'consumer_2_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_2_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_2_pipe_threshold !== undefined ? this._config.consumer_2_pipe_threshold : 0}
-                .configValue=${'consumer_2_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_2_unit_kw === true}
-                    .configValue=${'consumer_2_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_2 || "", 'secondary_consumer_2', this._localize('editor.secondary_sensor'))}
-
-            ${this._renderColorPickerQuint('color_consumer_2', 'color_pipe_consumer_2', 'color_text_consumer_2', 'color_icon_consumer_2', 'color_secondary_consumer_2', '#f97316')}
-        </div>
-
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #06b6d4;">${this._localize('editor.consumer_3_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_3, 'consumer_3', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_3_label}
-                .configValue=${'consumer_3_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_3_icon}
-                .configValue=${'consumer_3_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_3 === true}
-                    .configValue=${'invert_consumer_3'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_3_hide_pipe === true}
-                    .configValue=${'consumer_3_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_3_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_3_pipe_threshold !== undefined ? this._config.consumer_3_pipe_threshold : 0}
-                .configValue=${'consumer_3_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_3_unit_kw === true}
-                    .configValue=${'consumer_3_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_3 || "", 'secondary_consumer_3', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_3', 'color_pipe_consumer_3', 'color_text_consumer_3', 'color_icon_consumer_3', 'color_secondary_consumer_3', '#06b6d4')}
-        </div>
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #eab308;">${this._localize('editor.consumer_4_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_4, 'consumer_4', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_4_label}
-                .configValue=${'consumer_4_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_4_icon}
-                .configValue=${'consumer_4_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_4 === true}
-                    .configValue=${'invert_consumer_4'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_4_hide_pipe === true}
-                    .configValue=${'consumer_4_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_4_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_4_pipe_threshold !== undefined ? this._config.consumer_4_pipe_threshold : 0}
-                .configValue=${'consumer_4_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_4_unit_kw === true}
-                    .configValue=${'consumer_4_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_4 || "", 'secondary_consumer_4', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_4', 'color_pipe_consumer_4', 'color_text_consumer_4', 'color_icon_consumer_4', 'color_secondary_consumer_4', '#eab308')}
-        </div>
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #6366f1;">${this._localize('editor.consumer_5_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_5, 'consumer_5', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_5_label}
-                .configValue=${'consumer_5_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_5_icon}
-                .configValue=${'consumer_5_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_5 === true}
-                    .configValue=${'invert_consumer_5'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_5_hide_pipe === true}
-                    .configValue=${'consumer_5_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_5_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_5_pipe_threshold !== undefined ? this._config.consumer_5_pipe_threshold : 0}
-                .configValue=${'consumer_5_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_5_unit_kw === true}
-                    .configValue=${'consumer_5_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_5 || "", 'secondary_consumer_5', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_5', 'color_pipe_consumer_5', 'color_text_consumer_5', 'color_icon_consumer_5', 'color_secondary_consumer_5', '#6366f1')}
-        </div>
+        ${[
+            { idx: 1, color: '#a855f7' },
+            { idx: 2, color: '#f97316' },
+            { idx: 3, color: '#06b6d4' },
+            { idx: 4, color: '#eab308' },
+            { idx: 5, color: '#6366f1' },
+        ].map(c => this._renderConsumerGroup(c.idx, c.color, entities, entitySelectorSchema, textSelectorSchema, iconSelectorSchema))}
       `;
     }
 
@@ -1118,6 +963,15 @@ class PowerFluxCardEditor extends LitElement {
             <div class="option-group-title"><ha-icon icon="mdi:chart-timeline"></ha-icon> ${this._localize('editor.group_compact')}</div>
             ${this._renderSwitch('compact_view', 'editor.compact_view_enable', this._config.compact_view === true)}
             ${this._renderSwitch('compact_details', 'editor.compact_details', this._config.compact_details === true)}
+            ${this._renderSwitch('compact_glow', 'editor.compact_glow', this._config.compact_glow === true)}
+            ${this._renderSwitch('compact_icons_in_bracket', 'editor.compact_icons_in_bracket', this._config.compact_icons_in_bracket === true)}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px; margin-bottom: 8px;">
+                ${this._localize('editor.compact_icons_in_bracket_hint')}
+            </div>
+            ${this._renderSwitch('compact_bar_selfuse', 'editor.compact_bar_selfuse', this._config.compact_bar_selfuse === true)}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px;">
+                ${this._localize('editor.compact_bar_selfuse_hint')}
+            </div>
         </div>
 		
       </div>

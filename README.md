@@ -83,7 +83,8 @@ You can configure the card directly via the visual editor in Home Assistant.
 **Additional Consumers:**
 - You can add up to 5 individual consumers (e.g., Car, Heater, Pool) with custom icons and labels.
 - **Invert Sensor Value**: Available for every consumer. If the (inverted) value is negative, the flow animation reverses — the consumer feeds the house (e.g. a secondary solar/hybrid inverter).
-- **Hide pipe at low power**: Every consumer can hide its pipe (and bubble) below an individual watt threshold.
+- **Hide pipe at low power**: Hides only the connecting pipe below an individual watt threshold — the bubble stays visible.
+- **Hide standby values**: Optional per-consumer threshold (0–100 W) that treats small readings as 0 W, so devices idling at 1–3 W disappear completely (bubble and pipe).
 - Consumers are also shown in the Compact View (evcc) with their configured icons, labels and colors.
 
 **Options:**
@@ -91,15 +92,17 @@ You can configure the card directly via the visual editor in Home Assistant.
 - **Neon Glow**: Enable/disable the glowing effect.
 - **Donut Chart**: Show the energy mix as a ring around the house.
 - **Comet Tail / Dashed Line**: Change the flow animation style.
-- **Compact View**: Switch to the bar chart layout.
+- **Compact View**: Switch to the bar chart layout. Options: details table, neon glow, *Place icons on the bracket line* — the icons move from inside the brackets onto the bracket line and interrupt it — and *Include export in the bar* — when enabled, the export moves into the middle bar as its own segment and solar/battery only show the share actually used in the house.
 - **Horizontal / Diamond View**: Alternative layouts for the standard view — rotated 90° (horizontal) or with solar on top, grid left and battery right (diamond).
 - **Rounded Boxes**: Render the nodes as rounded boxes instead of circles.
-- **Color Options**: Define custom colors for each source and consumer.
+- **Color Options**: Define custom colors for each source and consumer. With the compact view enabled, the battery tab offers two full color rows (charge and discharge), each with bubble, pipe, text, icon and secondary.
+
+> **Color roles in the compact view:** every picker maps to a specific element — **Bubble** = bar segment, **Pipe** = bracket line, **Icon** = symbols, **Text** = value, **Secondary** = label in the details list. The bracket line keeps following the icon color until a pipe color is set explicitly.
 - **Grid Import/Export**: Configure separate or combined entities.
 - **Invert Grid Value**: For inverters that report export as positive and import as negative.
 - **Grid-to-Battery**: Optional direct sensor for Grid-to-Battery flow.
 - **Separate Battery Sensors**: Optional separate sensors for battery charge and discharge.
-- **Secondary Sensors**: Display alternative values in the main circles (e.g., daily yield, current charge power).
+- **Secondary Sensors**: Display alternative values in the main circles (e.g., daily yield, current charge power). Consumers and the house total additionally support a **third sensor** — both share one line separated by ` / ` and use the secondary color.
 
 
 <details>
@@ -131,7 +134,11 @@ With the [card_mod](https://github.com/thomasloven/lovelace-card-mod) integratio
 | `--consumer-1-color` | Bubble color Consumer 1 |
 | `--consumer-2-color` | Bubble color Consumer 2 |
 | `--consumer-3-color` | Bubble color Consumer 3 |
-| `--export-color` | Color for Export |
+| `--export-color` | Export base color (grid node while exporting) |
+| `--pipe-export-color` | Export pipe color (falls back to `--export-color`) |
+| `--text-export-color` | Export value color (falls back to `--export-color`) |
+| `--icon-export-color` | Export icon color (falls back to `--export-color`) |
+| `--secondary-export-color` | Export label in the compact details list (falls back to `--text-export-color`) |
 | `--pipe-solar-opacity` | Pipe opacity Solar (0 = hidden, 1 = visible) |
 | `--pipe-grid-opacity` | Pipe opacity Grid (0 = hidden, 1 = visible) |
 | `--pipe-battery-opacity` | Pipe opacity Battery (0 = hidden, 1 = visible) |
@@ -140,6 +147,38 @@ With the [card_mod](https://github.com/thomasloven/lovelace-card-mod) integratio
 | `--pipe-consumer-3-opacity` | Pipe opacity Consumer 3 (0 = hidden, 1 = visible) |
 | `--pipe-consumer-4-opacity` | Pipe opacity Consumer 4 (0 = hidden, 1 = visible) |
 | `--pipe-consumer-5-opacity` | Pipe opacity Consumer 5 (0 = hidden, 1 = visible) |
+| `--battery-charge-color` | Battery charge, bar segment (compact view) |
+| `--pipe-battery-charge-color` | Battery charge, bracket line (compact view) |
+| `--text-battery-charge-color` | Battery charge, value text (compact view) |
+| `--icon-battery-charge-color` | Battery charge, icon (compact view) |
+| `--secondary-battery-charge-color` | Battery charge, details label (compact view) |
+| `--battery-discharge-color` | Battery discharge, bar segment (compact view) |
+| `--pipe-battery-discharge-color` | Battery discharge, bracket line (compact view) |
+| `--text-battery-discharge-color` | Battery discharge, value text (compact view) |
+| `--icon-battery-discharge-color` | Battery discharge, icon (compact view) |
+| `--secondary-battery-discharge-color` | Battery discharge, details label (compact view) |
+| `--font-size-value` | Font size of the main value in the nodes (default 15px, 17px in box mode) |
+| `--font-size-label` | Font size of the labels below the icons (default 9px) |
+| `--font-size-secondary` | Font size of the secondary sensor value (default 10px, 12px in box mode) |
+| `--font-size-secondary-dual` | Font size when the second **and** third sensor share one line (default 8px, 9px in box mode) |
+| `--font-size-flow` | Font size of the flow rates on the pipes (default 10px) |
+| `--icon-size` | Icon size inside the nodes (default 33px) |
+| `--circle-size` | Node diameter, independent of zoom (default 90px) |
+
+> **Note on sizes:** `--font-size-*` and `--icon-size` are purely visual and safe to change. `--circle-size` keeps each node centered on its anchor point, but the pipes always dock at the default 90px rim — small adjustments (roughly 80–100px) look fine, larger ones detach the pipes from the nodes.
+
+**Example: larger text without scaling the whole card** (see Discussion #74)
+
+```yaml
+type: custom:power-flux-card
+card_mod:
+  style: |
+    :host {
+      --font-size-value: 19px;
+      --font-size-secondary: 13px;
+      --font-size-flow: 12px;
+    }
+```
 
 ### Example 1: Solar Icon — green during production, grey when idle
 
