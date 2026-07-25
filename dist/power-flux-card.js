@@ -18,6 +18,14 @@ const lang_de = {
     "editor.group_pipes": "Röhren & Verbraucher",
     "editor.group_compact": "Kompakte Ansicht (evcc)",
     "editor.compact_view_enable": "Kompakte Ansicht aktivieren",
+    "editor.compact_glow": "Neon Glow in kompakter Ansicht",
+    "editor.compact_icons_in_bracket": "Icons in die Klammern setzen",
+    "editor.compact_icons_in_bracket_hint": "Aus: Die Icons stehen innerhalb der Klammern, die Klammerlinie läuft durchgehend. An: Die Icons sitzen mittig auf der Klammerlinie und unterbrechen sie.",
+    "editor.compact_bar_selfuse": "Einspeisung in den Balken aufnehmen",
+    "editor.compact_bar_selfuse_hint": "Aus: Der mittlere Balken zeigt nur die Quellen (Solar, Batterie, Netz) in voller Höhe, die Einspeisung erscheint allein als Klammer darunter. An: Die Einspeisung wandert als eigenes farbiges Segment in den mittleren Balken — Solar und Batterie zeigen dann nur noch den Anteil, der wirklich im Haus verbraucht wird. Die Klammern oben zeigen unverändert die vollen Quellen.",
+    "editor.battery_charge_color": "🔋 Ladung",
+    "editor.battery_discharge_color": "⚡ Entladung",
+    "editor.battery_split_color_hint": "In der kompakten Ansicht lassen sich Ladung und Entladung getrennt einfärben. Bubble = Balkensegment, Pipe = Klammerlinie, Text = Wert, Icon = Symbol, Secondary = Beschriftung in der Detailliste.",
     "editor.flow_rate_title": "Flussraten (W) an Röhren anzeigen",
     "editor.invert_battery": "Wert umkehren (+/-)",
     "editor.label_toggle": "Label im Kreis anzeigen",
@@ -49,13 +57,16 @@ const lang_de = {
     "editor.invert_consumer": "Sensorwert invertieren (+/-)",
     "editor.invert_grid": "Wert umkehren (+/-)",
     "editor.secondary_sensor": "Zweiter Sensor (nur Anzeige)",
+    "editor.tertiary_sensor": "Dritter Sensor (nur Anzeige)",
+    "editor.tertiary_sensor_hint": "Zweiter und dritter Sensor werden in einer Zeile mit \" / \" getrennt angezeigt und nutzen beide die Secondary-Farbe.",
     "editor.grid_to_battery_sensor": "Netz-zu-Batterie Sensor (W, Optional)",
     "editor.grid_to_battery_hint": "Optional: separater Sensor für den Netz-zu-Batterie Fluss. Wenn leer, wird der Wert automatisch berechnet.",
     "editor.grid_combined_sensor": "Kombinierter Netz-Sensor (W, Optional)",
     "editor.grid_combined_hint": "Ein Sensor für Import UND Export: positiv = Import, negativ = Export. Überschreibt den kombinierten Import/Export Sensor.",
     "editor.color_picker": "Bubble",
     "editor.pipe_color": "Pipe",
-    "editor.export_color": "Export",
+    "editor.export_color": "↑ Einspeisung / Export",
+    "editor.export_color_hint": "Bubble färbt den Netz-Kreis beim Einspeisen, Pipe die Export-Röhre, Text den Wert, Icon das Symbol und Secondary die Beschriftung in der Detailliste der kompakten Ansicht. Alle folgen der Bubble-Farbe, solange sie nicht eigens gesetzt sind. Hinweis: Bubble wirkt in der kompakten Ansicht nur, wenn „Einspeisung in den Balken aufnehmen\" aktiv ist.",
     "editor.consumer_unit_kw": "Sensor meldet in kW",
     "editor.show_consumer_always": "Verbraucher bei null Watt anzeigen",
     "editor.battery_charge_sensor": "Batterie-Ladung Sensor (W, Optional)",
@@ -63,6 +74,10 @@ const lang_de = {
     "editor.battery_separate_hint": "Optional: Separate Sensoren für Laden/Entladen. Überschreiben den Hauptsensor für die Berechnung.",
     "editor.consumer_hide_pipe": "Pipe bei geringer Leistung ausblenden",
     "editor.consumer_pipe_threshold": "Pipe-Schwellenwert (Watt)",
+    "editor.consumer_not_set": "nicht gesetzt",
+    "editor.consumer_standby": "Standby-Werte ausblenden",
+    "editor.consumer_standby_threshold": "Standby-Schwellenwert (Watt)",
+    "editor.consumer_standby_hint": "Werte unterhalb des Schwellenwerts werden als 0 W gewertet, der Verbraucher wird dadurch ausgeblendet.",
     "editor.text_color": "Text",
     "editor.icon_color": "Icon",
     "editor.secondary_color": "Secondary",
@@ -84,6 +99,9 @@ const lang_de = {
     "card.label_pool": "Pool",
     "card.label_consumer_4": "Verbr. 4",
     "card.label_consumer_5": "Verbr. 5",
+    "card.label_export": "Einspeisung",
+    "card.label_in": "Erzeugung",
+    "card.label_out": "Verbrauch",
   }
 };
 const lang_en = {
@@ -101,6 +119,14 @@ const lang_en = {
     "editor.group_pipes": "Pipes & Consumers",
     "editor.group_compact": "Compact View (evcc)",
     "editor.compact_view_enable": "Enable Compact View",
+    "editor.compact_glow": "Neon Glow in Compact View",
+    "editor.compact_icons_in_bracket": "Place icons on the bracket line",
+    "editor.compact_icons_in_bracket_hint": "Off: the icons sit inside the brackets and the bracket line stays unbroken. On: the icons are centered on the bracket line and interrupt it.",
+    "editor.compact_bar_selfuse": "Include export in the bar",
+    "editor.compact_bar_selfuse_hint": "Off: the middle bar shows the sources only (solar, battery, grid) at full size, and the export appears as a bracket below it. On: the export moves into the middle bar as its own colored segment — solar and battery then only show the share actually used in the house. The top brackets keep showing the full sources.",
+    "editor.battery_charge_color": "🔋 Charge",
+    "editor.battery_discharge_color": "⚡ Discharge",
+    "editor.battery_split_color_hint": "In the compact view charge and discharge can be colored separately. Bubble = bar segment, Pipe = bracket line, Text = value, Icon = symbol, Secondary = label in the details list.",
     "editor.flow_rate_title": "Show Flow Rates (W) on pipes",
     "editor.invert_battery": "Invert Power Value (+/-)",
     "editor.label_toggle": "Show Label in Bubble",
@@ -132,13 +158,16 @@ const lang_en = {
     "editor.invert_consumer": "Invert Sensor Value (+/-)",
     "editor.invert_grid": "Invert Power Value (+/-)",
     "editor.secondary_sensor": "Secondary Sensor (display only)",
+    "editor.tertiary_sensor": "Third Sensor (display only)",
+    "editor.tertiary_sensor_hint": "The second and third sensor share one line, separated by \" / \", and both use the secondary color.",
     "editor.grid_to_battery_sensor": "Grid to Battery Sensor (W, optional)",
     "editor.grid_to_battery_hint": "Optional: separate sensor for grid-to-battery flow. If empty, the value is calculated automatically.",
     "editor.grid_combined_sensor": "Combined Grid Sensor (W, Optional)",
     "editor.grid_combined_hint": "Single sensor for import AND export: positive = import, negative = export. Overrides combined import/export sensor.",
     "editor.color_picker": "Bubble Color",
     "editor.pipe_color": "Pipe Color",
-    "editor.export_color": "Export Color",
+    "editor.export_color": "↑ Export",
+    "editor.export_color_hint": "Bubble colors the grid node while exporting, Pipe the export pipe, Text the value, Icon the symbol and Secondary the label in the compact view details list. All follow the bubble color until set explicitly. Note: Bubble only shows in the compact view when \"Include export in the bar\" is enabled.",
     "editor.consumer_unit_kw": "Sensor reports in kW",
     "editor.show_consumer_always": "Show Consumers at zero watts",
     "editor.battery_charge_sensor": "Battery Charge Sensor (W, Optional)",
@@ -146,6 +175,10 @@ const lang_en = {
     "editor.battery_separate_hint": "Optional: Separate sensors for charge/discharge. Override the main sensor for calculations.",
     "editor.consumer_hide_pipe": "Hide pipe at low power",
     "editor.consumer_pipe_threshold": "Pipe Threshold (Watts)",
+    "editor.consumer_not_set": "not set",
+    "editor.consumer_standby": "Hide standby values",
+    "editor.consumer_standby_threshold": "Standby Threshold (Watts)",
+    "editor.consumer_standby_hint": "Readings below the threshold count as 0 W, which hides the consumer entirely.",
     "editor.text_color": "Text Color",
     "editor.icon_color": "Icon Color",
     "editor.secondary_color": "Secondary",
@@ -167,6 +200,9 @@ const lang_en = {
     "card.label_pool": "Pool",
     "card.label_consumer_4": "Cons. 4",
     "card.label_consumer_5": "Cons. 5",
+    "card.label_export": "Export",
+    "card.label_in": "In",
+    "card.label_out": "Out",
   }
 };
 
@@ -208,7 +244,8 @@ class PowerFluxCardEditor extends LitElement {
         return {
             hass: {},
             _config: { state: true },
-            _subView: { state: true } // Controls which sub-page is open (null = main)
+            _subView: { state: true }, // Controls which sub-page is open (null = main)
+            _openConsumer: { state: true } // Index of the expanded consumer group (null = all collapsed)
         };
     }
 
@@ -252,7 +289,10 @@ class PowerFluxCardEditor extends LitElement {
                 'secondary_solar', 'secondary_grid', 'secondary_battery',
                 'secondary_consumer_1', 'secondary_consumer_2', 'secondary_consumer_3',
                 'secondary_consumer_4', 'secondary_consumer_5',
-                'secondary_house'
+                'secondary_house',
+                'tertiary_consumer_1', 'tertiary_consumer_2', 'tertiary_consumer_3',
+                'tertiary_consumer_4', 'tertiary_consumer_5',
+                'tertiary_house'
             ];
 
             let newConfig = { ...this._config };
@@ -471,15 +511,43 @@ class PowerFluxCardEditor extends LitElement {
         margin-bottom: 12px;
       }
       .consumer-group {
-        padding: 10px;
+        padding: 4px 10px;
         border-radius: 8px;
         border-bottom: 1px solid var(--divider-color);
-        margin-bottom: 12px;
+        margin-bottom: 8px;
+      }
+      .consumer-group.open {
+        padding-bottom: 10px;
+        background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.03);
+      }
+      .consumer-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        cursor: pointer;
+      }
+      .consumer-header:hover .consumer-chevron {
+        color: var(--primary-color);
+      }
+      .consumer-summary {
+        flex: 1;
+        text-align: right;
+        font-size: 0.85em;
+        color: var(--secondary-text-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .consumer-chevron {
+        --mdc-icon-size: 20px;
+        color: var(--secondary-text-color);
+        flex-shrink: 0;
       }
       .consumer-title {
-        font-weight: bold; 
-        margin-bottom: 8px;
+        font-weight: bold;
         color: var(--primary-text-color);
+        white-space: nowrap;
       }
       .separator {
           border-bottom: 1px solid var(--divider-color);
@@ -557,6 +625,12 @@ class PowerFluxCardEditor extends LitElement {
           width: 26px;
           height: 26px;
       }
+      .color-row-title {
+          font-size: 0.9em;
+          font-weight: bold;
+          margin-top: 10px;
+          color: var(--primary-text-color);
+      }
       .option-group {
           border: 1px solid var(--divider-color);
           border-radius: 12px;
@@ -586,6 +660,98 @@ class PowerFluxCardEditor extends LitElement {
           margin-bottom: 4px;
       }
     `;
+    }
+
+    // One configuration block for an additional consumer (1-5)
+    _renderConsumerGroup(idx, defaultColor, entities, entitySelectorSchema, textSelectorSchema, iconSelectorSchema) {
+        const cfg = this._config;
+        const inlineSwitch = (configKey, labelKey) => html`
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
+                <span>${this._localize(labelKey)}</span>
+                <ha-switch
+                    .checked=${cfg[configKey] === true}
+                    .configValue=${configKey}
+                    @change=${this._valueChanged}
+                ></ha-switch>
+            </div>`;
+        const slider = (configKey, labelKey, max, step) => html`
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${{ number: { min: 0, max: max, step: step, mode: "slider" } }}
+                .value=${cfg[configKey] !== undefined ? cfg[configKey] : 0}
+                .configValue=${configKey}
+                .label=${this._localize(labelKey)}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>`;
+
+        const isOpen = this._openConsumer === idx;
+        const entityId = entities[`consumer_${idx}`];
+        const summary = cfg[`consumer_${idx}_label`] || (entityId ? entityId : this._localize('editor.consumer_not_set'));
+
+        return html`
+        <div class="consumer-group ${isOpen ? 'open' : ''}">
+            <div class="consumer-header" @click=${() => this._toggleConsumer(idx)}>
+                <div class="consumer-title" style="color: ${defaultColor};">${this._localize(`editor.consumer_${idx}_title`)}</div>
+                <div class="consumer-summary">${summary}</div>
+                <ha-icon class="consumer-chevron" icon="${isOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'}"></ha-icon>
+            </div>
+            ${!isOpen ? '' : html`
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`consumer_${idx}`], `consumer_${idx}`, this._localize('editor.entity'))}
+
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${textSelectorSchema}
+                .value=${cfg[`consumer_${idx}_label`]}
+                .configValue=${`consumer_${idx}_label`}
+                .label=${this._localize('editor.label')}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>
+
+            <ha-selector
+                .hass=${this.hass}
+                .selector=${iconSelectorSchema}
+                .value=${cfg[`consumer_${idx}_icon`]}
+                .configValue=${`consumer_${idx}_icon`}
+                .label=${this._localize('editor.icon')}
+                @value-changed=${this._valueChanged}
+            ></ha-selector>
+
+            ${inlineSwitch(`invert_consumer_${idx}`, 'editor.invert_consumer')}
+
+            ${inlineSwitch(`consumer_${idx}_standby`, 'editor.consumer_standby')}
+            ${cfg[`consumer_${idx}_standby`] === true ? html`
+                ${slider(`consumer_${idx}_standby_threshold`, 'editor.consumer_standby_threshold', 100, 1)}
+                <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                    ${this._localize('editor.consumer_standby_hint')}
+                </div>` : ''}
+
+            ${inlineSwitch(`consumer_${idx}_hide_pipe`, 'editor.consumer_hide_pipe')}
+            ${cfg[`consumer_${idx}_hide_pipe`] === true
+                ? slider(`consumer_${idx}_pipe_threshold`, 'editor.consumer_pipe_threshold', 2000, 10)
+                : ''}
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
+                <span>${this._localize('editor.consumer_unit_kw')}</span>
+                <ha-switch
+                    .checked=${cfg[`consumer_${idx}_unit_kw`] === true}
+                    .configValue=${`consumer_${idx}_unit_kw`}
+                    @change=${this._valueChanged}
+                ></ha-switch>
+            </div>
+
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`secondary_consumer_${idx}`] || "", `secondary_consumer_${idx}`, this._localize('editor.secondary_sensor'))}
+            ${this._renderEntitySelector(entitySelectorSchema, entities[`tertiary_consumer_${idx}`] || "", `tertiary_consumer_${idx}`, this._localize('editor.tertiary_sensor'))}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                ${this._localize('editor.tertiary_sensor_hint')}
+            </div>
+
+            ${this._renderColorPickerQuint(`color_consumer_${idx}`, `color_pipe_consumer_${idx}`, `color_text_consumer_${idx}`, `color_icon_consumer_${idx}`, `color_secondary_consumer_${idx}`, defaultColor)}
+            `}
+        </div>`;
+    }
+
+    _toggleConsumer(idx) {
+        this._openConsumer = this._openConsumer === idx ? null : idx;
     }
 
     _renderSwitch(configKey, labelKey, checked) {
@@ -713,7 +879,11 @@ class PowerFluxCardEditor extends LitElement {
 
         ${this._renderColorPickerQuint('color_grid', 'color_pipe_grid', 'color_text_grid', 'color_icon_grid', 'color_secondary_grid', '#3b82f6')}
 
-        ${this._renderColorPicker('color_export', this._localize('editor.export_color'), '#ff3333')}
+        <div class="color-row-title">${this._localize('editor.export_color')}</div>
+        ${this._renderColorPickerQuint('color_export', 'color_pipe_export', 'color_text_export', 'color_icon_export', 'color_secondary_export', '#ff3333')}
+        <div style="font-size: 0.8em; color: var(--secondary-text-color);">
+            ${this._localize('editor.export_color_hint')}
+        </div>
 
         <div class="separator"></div>
         
@@ -806,8 +976,18 @@ class PowerFluxCardEditor extends LitElement {
 
         ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_battery || "", 'secondary_battery', this._localize('editor.secondary_sensor'))}
 
-        ${this._renderColorPickerQuint('color_battery', 'color_pipe_battery', 'color_text_battery', 'color_icon_battery', 'color_secondary_battery', '#00ff88')}
-        
+        ${this._config.compact_view === true ? html`
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 8px;">
+                ${this._localize('editor.battery_split_color_hint')}
+            </div>
+            <div class="color-row-title">${this._localize('editor.battery_discharge_color')}</div>
+            ${this._renderColorPickerQuint('color_battery_discharge', 'color_pipe_battery_discharge', 'color_text_battery_discharge', 'color_icon_battery_discharge', 'color_secondary_battery_discharge', '#00ff88')}
+            <div class="color-row-title">${this._localize('editor.battery_charge_color')}</div>
+            ${this._renderColorPickerQuint('color_battery_charge', 'color_pipe_battery_charge', 'color_text_battery_charge', 'color_icon_battery_charge', 'color_secondary_battery_charge', '#00ff88')}
+        ` : html`
+            ${this._renderColorPickerQuint('color_battery', 'color_pipe_battery', 'color_text_battery', 'color_icon_battery', 'color_secondary_battery', '#00ff88')}
+        `}
+
         <div class="separator"></div>
         
         <div class="switch-row">
@@ -872,8 +1052,8 @@ class PowerFluxCardEditor extends LitElement {
             <h2>${this._localize('editor.consumers_section')}</h2>
         </div>
 
-        <div class="consumer-group">
-            <div class="consumer-title">${this._localize('editor.house_total_title')}</div>
+        <div class="consumer-group open">
+            <div class="consumer-title" style="padding: 10px 0 8px;">${this._localize('editor.house_total_title')}</div>
             ${this._renderEntitySelector(entitySelectorSchema, entities.house || "", 'house', this._localize('editor.house_sensor_label'))}
              <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px;">
                 ${this._localize('editor.house_sensor_hint')}
@@ -898,319 +1078,20 @@ class PowerFluxCardEditor extends LitElement {
             ></ha-selector>
 
             ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_house || "", 'secondary_house', this._localize('editor.secondary_sensor'))}
+            ${this._renderEntitySelector(entitySelectorSchema, entities.tertiary_house || "", 'tertiary_house', this._localize('editor.tertiary_sensor'))}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;">
+                ${this._localize('editor.tertiary_sensor_hint')}
+            </div>
             ${this._renderColorPickerQuint('color_house', null, 'color_text_house', 'color_icon_house', 'color_secondary_house', '#ff0080')}
         </div>
 
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #a855f7;">${this._localize('editor.consumer_1_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_1, 'consumer_1', this._localize('editor.entity'))}
-            
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_1_label}
-                .configValue=${'consumer_1_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_1_icon}
-                .configValue=${'consumer_1_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_1 === true}
-                    .configValue=${'invert_consumer_1'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_1_hide_pipe === true}
-                    .configValue=${'consumer_1_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_1_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_1_pipe_threshold !== undefined ? this._config.consumer_1_pipe_threshold : 0}
-                .configValue=${'consumer_1_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_1_unit_kw === true}
-                    .configValue=${'consumer_1_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_1 || "", 'secondary_consumer_1', this._localize('editor.secondary_sensor'))}
-
-            ${this._renderColorPickerQuint('color_consumer_1', 'color_pipe_consumer_1', 'color_text_consumer_1', 'color_icon_consumer_1', 'color_secondary_consumer_1', '#a855f7')}
-        </div>
-
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #f97316;">${this._localize('editor.consumer_2_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_2, 'consumer_2', this._localize('editor.entity'))}
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_2_label}
-                .configValue=${'consumer_2_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_2_icon}
-                .configValue=${'consumer_2_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_2 === true}
-                    .configValue=${'invert_consumer_2'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_2_hide_pipe === true}
-                    .configValue=${'consumer_2_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_2_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_2_pipe_threshold !== undefined ? this._config.consumer_2_pipe_threshold : 0}
-                .configValue=${'consumer_2_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_2_unit_kw === true}
-                    .configValue=${'consumer_2_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_2 || "", 'secondary_consumer_2', this._localize('editor.secondary_sensor'))}
-
-            ${this._renderColorPickerQuint('color_consumer_2', 'color_pipe_consumer_2', 'color_text_consumer_2', 'color_icon_consumer_2', 'color_secondary_consumer_2', '#f97316')}
-        </div>
-
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #06b6d4;">${this._localize('editor.consumer_3_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_3, 'consumer_3', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_3_label}
-                .configValue=${'consumer_3_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_3_icon}
-                .configValue=${'consumer_3_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_3 === true}
-                    .configValue=${'invert_consumer_3'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_3_hide_pipe === true}
-                    .configValue=${'consumer_3_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_3_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_3_pipe_threshold !== undefined ? this._config.consumer_3_pipe_threshold : 0}
-                .configValue=${'consumer_3_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_3_unit_kw === true}
-                    .configValue=${'consumer_3_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_3 || "", 'secondary_consumer_3', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_3', 'color_pipe_consumer_3', 'color_text_consumer_3', 'color_icon_consumer_3', 'color_secondary_consumer_3', '#06b6d4')}
-        </div>
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #eab308;">${this._localize('editor.consumer_4_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_4, 'consumer_4', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_4_label}
-                .configValue=${'consumer_4_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_4_icon}
-                .configValue=${'consumer_4_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_4 === true}
-                    .configValue=${'invert_consumer_4'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_4_hide_pipe === true}
-                    .configValue=${'consumer_4_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_4_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_4_pipe_threshold !== undefined ? this._config.consumer_4_pipe_threshold : 0}
-                .configValue=${'consumer_4_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_4_unit_kw === true}
-                    .configValue=${'consumer_4_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_4 || "", 'secondary_consumer_4', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_4', 'color_pipe_consumer_4', 'color_text_consumer_4', 'color_icon_consumer_4', 'color_secondary_consumer_4', '#eab308')}
-        </div>
-        <div class="consumer-group">
-            <div class="consumer-title" style="color: #6366f1;">${this._localize('editor.consumer_5_title')}</div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.consumer_5, 'consumer_5', this._localize('editor.entity'))}
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${textSelectorSchema}
-                .value=${this._config.consumer_5_label}
-                .configValue=${'consumer_5_label'}
-                .label=${this._localize('editor.label')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${iconSelectorSchema}
-                .value=${this._config.consumer_5_icon}
-                .configValue=${'consumer_5_icon'}
-                .label=${this._localize('editor.icon')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.invert_consumer')}</span>
-                <ha-switch
-                    .checked=${this._config.invert_consumer_5 === true}
-                    .configValue=${'invert_consumer_5'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
-                <span>${this._localize('editor.consumer_hide_pipe')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_5_hide_pipe === true}
-                    .configValue=${'consumer_5_hide_pipe'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-
-            ${this._config.consumer_5_hide_pipe === true ? html`
-            <ha-selector
-                .hass=${this.hass}
-                .selector=${{ number: { min: 0, max: 2000, step: 10, mode: "slider" } }}
-                .value=${this._config.consumer_5_pipe_threshold !== undefined ? this._config.consumer_5_pipe_threshold : 0}
-                .configValue=${'consumer_5_pipe_threshold'}
-                .label=${this._localize('editor.consumer_pipe_threshold')}
-                @value-changed=${this._valueChanged}
-            ></ha-selector>
-            ` : ''}
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 8px;">
-                <span>${this._localize('editor.consumer_unit_kw')}</span>
-                <ha-switch
-                    .checked=${this._config.consumer_5_unit_kw === true}
-                    .configValue=${'consumer_5_unit_kw'}
-                    @change=${this._valueChanged}
-                ></ha-switch>
-            </div>
-            ${this._renderEntitySelector(entitySelectorSchema, entities.secondary_consumer_5 || "", 'secondary_consumer_5', this._localize('editor.secondary_sensor'))}
-            ${this._renderColorPickerQuint('color_consumer_5', 'color_pipe_consumer_5', 'color_text_consumer_5', 'color_icon_consumer_5', 'color_secondary_consumer_5', '#6366f1')}
-        </div>
+        ${[
+            { idx: 1, color: '#a855f7' },
+            { idx: 2, color: '#f97316' },
+            { idx: 3, color: '#06b6d4' },
+            { idx: 4, color: '#eab308' },
+            { idx: 5, color: '#6366f1' },
+        ].map(c => this._renderConsumerGroup(c.idx, c.color, entities, entitySelectorSchema, textSelectorSchema, iconSelectorSchema))}
       `;
     }
 
@@ -1296,6 +1177,15 @@ class PowerFluxCardEditor extends LitElement {
             <div class="option-group-title"><ha-icon icon="mdi:chart-timeline"></ha-icon> ${this._localize('editor.group_compact')}</div>
             ${this._renderSwitch('compact_view', 'editor.compact_view_enable', this._config.compact_view === true)}
             ${this._renderSwitch('compact_details', 'editor.compact_details', this._config.compact_details === true)}
+            ${this._renderSwitch('compact_glow', 'editor.compact_glow', this._config.compact_glow === true)}
+            ${this._renderSwitch('compact_icons_in_bracket', 'editor.compact_icons_in_bracket', this._config.compact_icons_in_bracket === true)}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px; margin-bottom: 8px;">
+                ${this._localize('editor.compact_icons_in_bracket_hint')}
+            </div>
+            ${this._renderSwitch('compact_bar_selfuse', 'editor.compact_bar_selfuse', this._config.compact_bar_selfuse === true)}
+            <div style="font-size: 0.8em; color: var(--secondary-text-color); margin-top: 4px;">
+                ${this._localize('editor.compact_bar_selfuse_hint')}
+            </div>
         </div>
 		
       </div>
@@ -1311,7 +1201,7 @@ customElements.define("power-flux-card-editor", PowerFluxCardEditor);
 
 
 console.log(
-  "%c⚡ Power Flux Card v_2.6 ready",
+  "%c⚡ Power Flux Card v_2.7 ready",
   "background: #d19525ff; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold;"
 );
 
@@ -1348,6 +1238,9 @@ console.log(
       return {
         zoom: 0.9,
         compact_view: false,
+        compact_glow: false,
+        compact_bar_selfuse: false,
+        compact_icons_in_bracket: false,
         horizontal_view: false,
         diamond_view: false,
         use_boxes: false,
@@ -1424,6 +1317,10 @@ console.log(
         }
       });
       this._resizeObserver.observe(this);
+      // Seed the width immediately - the observer only fires after the first paint,
+      // so the compact view would otherwise lay out its brackets against a 400px guess.
+      const initialWidth = this.getBoundingClientRect().width;
+      if (initialWidth > 0) this._cardWidth = initialWidth;
     }
 
     updated(changedProps) {
@@ -1443,6 +1340,21 @@ console.log(
           'color_grid': '--neon-blue',
           'color_battery': '--neon-green',
           'color_export': '--export-color',
+          'color_pipe_export': '--pipe-export-color',
+          'color_text_export': '--text-export-color',
+          'color_icon_export': '--icon-export-color',
+          'color_secondary_export': '--secondary-export-color',
+          // Compact view: battery split into charge / discharge (bubble, pipe, text, icon, secondary)
+          'color_battery_charge': '--battery-charge-color',
+          'color_pipe_battery_charge': '--pipe-battery-charge-color',
+          'color_text_battery_charge': '--text-battery-charge-color',
+          'color_icon_battery_charge': '--icon-battery-charge-color',
+          'color_secondary_battery_charge': '--secondary-battery-charge-color',
+          'color_battery_discharge': '--battery-discharge-color',
+          'color_pipe_battery_discharge': '--pipe-battery-discharge-color',
+          'color_text_battery_discharge': '--text-battery-discharge-color',
+          'color_icon_battery_discharge': '--icon-battery-discharge-color',
+          'color_secondary_battery_discharge': '--secondary-battery-discharge-color',
           'color_consumer_1': '--consumer-1-color',
           'color_consumer_2': '--consumer-2-color',
           'color_consumer_3': '--consumer-3-color',
@@ -1518,6 +1430,10 @@ console.log(
         --consumer-3-color: #06b6d4;
         --consumer-4-color: #eab308;
         --consumer-5-color: #6366f1;
+        --pipe-export-color: var(--export-color);
+        --text-export-color: var(--export-color);
+        --icon-export-color: var(--export-color);
+        --secondary-export-color: var(--text-export-color);
         --pipe-solar-color: var(--neon-yellow);
         --pipe-grid-color: var(--neon-blue);
         --pipe-battery-color: var(--neon-green);
@@ -1702,8 +1618,10 @@ console.log(
       }
 
       .bubble {
-        width: 90px;
-        height: 90px;
+        /* --circle-size keeps the node centered on its anchor so the pipes still meet the rim */
+        width: var(--circle-size, 90px);
+        height: var(--circle-size, 90px);
+        margin: calc((90px - var(--circle-size, 90px)) / 2);
         border-radius: 50%;
         background: transparent;
         border: 2px solid var(--divider-color, #333);
@@ -1749,20 +1667,27 @@ console.log(
       }
       
       .icon-svg, .icon-custom {
-          width: 33px; height: 33px; position: absolute; top: 10px; left: 50%; margin-left: -17px; z-index: 2; display: block;
+          width: var(--icon-size, 33px); height: var(--icon-size, 33px); position: absolute; top: 10px; left: 50%;
+          margin-left: calc(var(--icon-size, 33px) / -2); z-index: 2; display: block;
       }
-      .icon-custom { --mdc-icon-size: 34px; }
-      
-      .sub { 
-        font-size: 9px; color: var(--secondary-text-color); text-transform: uppercase; letter-spacing: 0.5px;
+      .icon-custom { --mdc-icon-size: var(--icon-size, 34px); }
+
+      .sub {
+        font-size: var(--font-size-label, 9px); color: var(--secondary-text-color); text-transform: uppercase; letter-spacing: 0.5px;
         line-height: 1.1; z-index: 2; position: absolute; top: 46px; left: 0; width: 100%; text-align: center; margin: 0; pointer-events: none;
       }
       .sub.secondary-val {
-        text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 10px;
+        text-transform: none; letter-spacing: 0; font-weight: 500; font-size: var(--font-size-secondary, 10px);
+      }
+      /* Second + third sensor in one line: smaller and never wrapping, so both stay inside the node */
+      .sub.secondary-val.dual {
+        font-size: var(--font-size-secondary-dual, 8px);
+        letter-spacing: -0.2px;
+        white-space: nowrap;
       }
 
-      .value { 
-        font-weight: bold; font-size: 15px; white-space: nowrap; z-index: 2; transition: color 0.3s ease;
+      .value {
+        font-weight: bold; font-size: var(--font-size-value, 15px); white-space: nowrap; z-index: 2; transition: color 0.3s ease;
         line-height: 1.2; position: absolute; bottom: 11px; left: 0; width: 100%; text-align: center; margin: 0;
       }
       .bubble.grid .value, .bubble.house .value { bottom: 15px; }
@@ -1828,10 +1753,11 @@ console.log(
       .bubble.box { border-radius: 16px; }
       .bubble.box.donut::before { border-radius: 16px; }
       /* Boxes offer more usable width: larger type, shifted 3px down */
-      .bubble.box .value { font-size: 17px; bottom: 3px; }
+      .bubble.box .value { font-size: var(--font-size-value, 17px); bottom: 3px; }
       .bubble.box.grid .value, .bubble.box.house .value { bottom: 6px; }
       .bubble.box .sub { top: 49px; }
-      .bubble.box .sub.secondary-val { font-size: 12px; }
+      .bubble.box .sub.secondary-val { font-size: var(--font-size-secondary, 12px); }
+      .bubble.box .sub.secondary-val.dual { font-size: var(--font-size-secondary-dual, 9px); }
 
       svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
       
@@ -1839,7 +1765,7 @@ console.log(
       .bg-solar { stroke: var(--pipe-solar-color); opacity: var(--pipe-solar-opacity, 1); }
       .bg-grid { stroke: var(--pipe-grid-color); opacity: var(--pipe-grid-opacity, 1); }
       .bg-battery { stroke: var(--pipe-battery-color); opacity: var(--pipe-battery-opacity, 1); }
-      .bg-export { stroke: var(--export-color); }
+      .bg-export { stroke: var(--pipe-export-color); }
       .bg-c1 { stroke: var(--pipe-consumer-1-color); opacity: var(--pipe-consumer-1-opacity, 1); }
       .bg-c2 { stroke: var(--pipe-consumer-2-color); opacity: var(--pipe-consumer-2-opacity, 1); }
       .bg-c3 { stroke: var(--pipe-consumer-3-color); opacity: var(--pipe-consumer-3-opacity, 1); }
@@ -1853,17 +1779,17 @@ console.log(
       .flow-solar { stroke: var(--pipe-solar-color); opacity: var(--pipe-solar-opacity, 1); }
       .flow-grid { stroke: var(--pipe-grid-color); opacity: var(--pipe-grid-opacity, 1); }
       .flow-battery { stroke: var(--pipe-battery-color); opacity: var(--pipe-battery-opacity, 1); }
-      .flow-export { stroke: var(--export-color); }
+      .flow-export { stroke: var(--pipe-export-color); }
 
       @keyframes dash { to { stroke-dashoffset: -1500; } }
 
       .flow-text {
-        font-size: 10px; font-weight: bold; text-anchor: middle; fill: #fff; transition: opacity 0.3s ease;
+        font-size: var(--font-size-flow, 10px); font-weight: bold; text-anchor: middle; fill: #fff; transition: opacity 0.3s ease;
       }
       .flow-text.no-shadow { filter: none; }
       .text-solar { fill: var(--pipe-solar-color); }
       .text-grid { fill: var(--pipe-grid-color); }
-      .text-export { fill: var(--export-color); }
+      .text-export { fill: var(--text-export-color); }
       .text-battery { fill: var(--pipe-battery-color); }
 
       /*
@@ -1879,20 +1805,20 @@ console.log(
       .layout-standard   .pos-export-grid  { transform: translate(185px, 195px); }
 
       .layout-horizontal .pos-solar-house  { transform: translate(225px, 340px); }
-      .layout-horizontal .pos-solar-batt   { transform: translate(285px, 160px); }
+      .layout-horizontal .pos-solar-batt   { transform: translate(35px, 210px); }
       .layout-horizontal .pos-grid-house   { transform: translate(205px, 200px); }
       .layout-horizontal .pos-grid-batt    { transform: translate(110px, 135px); }
       .layout-horizontal .pos-batt-house   { transform: translate(225px, 85px); }
       .layout-horizontal .pos-export-solar { transform: translate(110px, 295px); }
-      .layout-horizontal .pos-export-grid  { transform: translate(205px, 205px); }
+      .layout-horizontal .pos-export-grid  { transform: translate(205px, 225px); }
 
       .layout-diamond    .pos-solar-house  { transform: translate(235px, 210px); }
       .layout-diamond    .pos-solar-batt   { transform: translate(285px, 160px); }
       .layout-diamond    .pos-grid-house   { transform: translate(130px, 225px); }
-      .layout-diamond    .pos-grid-batt    { transform: translate(150px, 182px); }
-      .layout-diamond    .pos-batt-house   { transform: translate(298px, 245px); }
+      .layout-diamond    .pos-grid-batt    { transform: translate(130px, 182px); }
+      .layout-diamond    .pos-batt-house   { transform: translate(285px, 225px); }
       .layout-diamond    .pos-export-solar { transform: translate(135px, 160px); }
-      .layout-diamond    .pos-export-grid  { transform: translate(125px, 243px); }
+      .layout-diamond    .pos-export-grid  { transform: translate(120px, 258px); }
     `;
     }
 
@@ -1953,8 +1879,23 @@ console.log(
       return style.getPropertyValue(`--pipe-consumer-${index}-color`).trim() || this._getConsumerColor(index);
     }
 
+    // Signed consumer value incl. kW scaling, inversion and standby suppression.
+    // Standby: readings below the threshold are treated as 0 so idle devices disappear entirely.
+    _getConsumerValue(entityId, index) {
+      if (!entityId) return 0;
+      const state = this.hass.states[entityId];
+      let val = state ? parseFloat(state.state) || 0 : 0;
+      if (this.config[`consumer_${index}_unit_kw`] === true) val *= 1000;
+      if (this.config[`invert_consumer_${index}`]) val *= -1;
+      if (this.config[`consumer_${index}_standby`] === true) {
+        const threshold = this.config[`consumer_${index}_standby_threshold`] || 0;
+        if (Math.abs(val) < threshold) val = 0;
+      }
+      return val;
+    }
+
     // --- DOM NODE SVG GENERATOR ---
-    _renderSVGPath(d, color) {
+    _renderSVGPath(d, color, glow = false) {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", d);
       path.setAttribute("class", "bracket-line");
@@ -1963,11 +1904,13 @@ console.log(
       path.setAttribute("fill", "none");
       path.style.stroke = color;
       path.style.fill = "none";
+      path.style.filter = glow ? `drop-shadow(0 0 3px ${color})` : "";
       return path;
     }
 
     // --- SQUARE BRACKET GENERATOR ---
-    _createBracketPath(startPx, widthPx, direction) {
+    // gapPx > 0 cuts a hole into the middle of the horizontal line, so an icon can sit in it
+    _createBracketPath(startPx, widthPx, direction, gapPx = 0) {
       if (widthPx < 5) return "";
 
       const r = 5;
@@ -1989,12 +1932,23 @@ console.log(
 
       const yCorner = direction === 'down' ? yLine + rEff : yLine - rEff;
 
+      // The gap must not eat into the rounded corners, otherwise the bracket loses its legs
+      const lineStart = startX + rEff;
+      const lineEnd = endX - rEff;
+      const halfGap = gapPx / 2;
+      const center = startX + (widthPx / 2);
+      const drawGap = gapPx > 0 && (center - halfGap) > lineStart && (center + halfGap) < lineEnd;
+
+      const middle = drawGap
+        ? `L ${center - halfGap} ${yLine} M ${center + halfGap} ${yLine} L ${lineEnd} ${yLine} `
+        : `L ${lineEnd} ${yLine} `;
+
       return `
-        M ${startX} ${yBase} 
-        L ${startX} ${yCorner} 
-        Q ${startX} ${yLine} ${startX + rEff} ${yLine} 
-        L ${endX - rEff} ${yLine} 
-        Q ${endX} ${yLine} ${endX} ${yCorner} 
+        M ${startX} ${yBase}
+        L ${startX} ${yCorner}
+        Q ${startX} ${yLine} ${lineStart} ${yLine}
+        ${middle}
+        Q ${endX} ${yLine} ${endX} ${yCorner}
         L ${endX} ${yBase}
       `;
     }
@@ -2031,16 +1985,16 @@ console.log(
       };
       const consumers = [1, 2, 3, 4, 5].map(idx => {
         const ent = entities[`consumer_${idx}`];
-        let v = ent ? getValUnit(ent, this.config[`consumer_${idx}_unit_kw`] === true) : 0;
-        if (this.config[`invert_consumer_${idx}`]) { v *= -1; }
         return {
           idx,
           entityId: ent,
-          val: Math.abs(v),
+          val: Math.abs(this._getConsumerValue(ent, idx)),
           icon: this.config[`consumer_${idx}_icon`] || consumerDefaults[idx].icon,
           label: this.config[`consumer_${idx}_label`] || consumerDefaults[idx].label,
           iconColor: `var(--icon-consumer-${idx}-color)`,
-          textColor: `var(--consumer-${idx}-color)`,
+          pipeColor: this.config[`color_pipe_consumer_${idx}`] ? `var(--pipe-consumer-${idx}-color)` : `var(--icon-consumer-${idx}-color)`,
+          textColor: `var(--text-consumer-${idx}-color, var(--consumer-${idx}-color))`,
+          secondaryColor: `var(--secondary-consumer-${idx}-color, var(--secondary-text-color))`,
         };
       });
 
@@ -2066,13 +2020,14 @@ console.log(
 
       const batteryCharge = hasBattChargeSensor ? Math.abs(getVal(entities.battery_charge)) : (battery > 0 ? battery : 0);
       const batteryDischarge = hasBattDischargeSensor ? Math.abs(getVal(entities.battery_discharge)) : (battery < 0 ? Math.abs(battery) : 0);
+      const batteryChargeViaHouse = this.config.battery_charge_via_house === true;
 
       let solarToBatt = 0;
       let gridToBatt = 0;
 
       if (batteryCharge > 0) {
         const hasGridToBattSensor = !!(entities.grid_to_battery && entities.grid_to_battery !== "");
-        if (this.config.battery_charge_via_house === true) {
+        if (batteryChargeViaHouse) {
           // Battery charges via house: no direct solar→batt or grid→batt pipes
           solarToBatt = 0;
           gridToBatt = 0;
@@ -2116,33 +2071,92 @@ console.log(
       const totalFlux = srcBattery + srcSolar + srcGrid;
 
       // DESTINATIONS (for Bottom Brackets)
-      const destHouse = housePower;
+      // With "charge via house" the battery is fed out of the house total, so its share has to be
+      // removed from the house bracket - otherwise the brackets add up to more than the bar itself.
+      const destHouse = batteryChargeViaHouse ? Math.max(0, housePower - batteryCharge) : housePower;
       const destExport = gridExport;
-      // Note: Battery Charge is also a destination (internal flow), but usually not bracketed if we only want "Consumers"
-      // If we don't bracket Charge, there will be a gap. We can accept that or add a Charge bracket.
-      // Given user request "Only EV... and Grid Export", we stick to those.
+
+      // Color roles for the compact view, so every picker in the editor has a visible effect here:
+      // bubble = bar segment, pipe = bracket line, icon = symbols, text = value, secondary = details label.
+      // The bracket line kept following the icon color historically, so it only switches to the pipe
+      // color once one is configured explicitly - existing setups therefore look unchanged.
+      const roleColors = (prefix, base, pipeKey = `color_pipe_${prefix}`, pipeVar = `--pipe-${prefix}-color`) => {
+        const icon = `var(--icon-${prefix}-color, ${base})`;
+        return {
+          bubble: base,
+          pipe: this.config[pipeKey] ? `var(${pipeVar})` : icon,
+          icon,
+          text: `var(--text-${prefix}-color, ${base})`,
+          secondary: `var(--secondary-${prefix}-color, var(--secondary-text-color))`,
+        };
+      };
+      const colSolar = roleColors('solar', 'var(--neon-yellow)');
+      const colGrid = roleColors('grid', 'var(--neon-blue)');
+      const colHouse = roleColors('house', 'var(--neon-pink)');
+      // Export has a single color picker, so every role uses it
+      const colExport = {
+        bubble: 'var(--export-color)',
+        pipe: 'var(--pipe-export-color)',
+        icon: 'var(--icon-export-color)',
+        text: 'var(--text-export-color)',
+        secondary: 'var(--secondary-export-color)',
+      };
+      // Battery is split per direction, each with the full set of roles
+      const battColors = (dir) => roleColors(
+        `battery-${dir}`,
+        `var(--battery-${dir}-color, var(--neon-green))`,
+        `color_pipe_battery_${dir}`,
+        `--pipe-battery-${dir}-color`
+      );
+      const battCharge = battColors('charge');
+      const battDischarge = battColors('discharge');
+
+      // Icons either sit inside the bracket (default) or centered on the bracket line, which is
+      // then cut open around them. Bracket geometry: top line at y=4, bottom line at y=20, icon box 20px.
+      const iconsInBracket = this.config.compact_icons_in_bracket === true;
+      const topIconTop = iconsInBracket ? '-6px' : '4px';
+      const bottomIconTop = iconsInBracket ? '10px' : '-3px';
+      // 20px icon plus 4px breathing room on either side; the bracket needs room left for its side legs
+      const iconGapPx = 28;
+      const minIconWidth = iconsInBracket ? 44 : 20;
+      const bracketGap = (width) => (iconsInBracket && width > minIconWidth) ? iconGapPx : 0;
+
+      // Optional bar mode: show how energy is actually used (self consumption) instead of raw sources
+      const selfUseBar = this.config.compact_bar_selfuse === true;
+      const consumerTotal = consumers.reduce((sum, c) => sum + c.power, 0);
+      const selfConsum = destHouse + consumerTotal + batteryCharge;
+      const selfPV = Math.min(srcSolar, selfConsum);
+      const selfBattery = Math.min(srcBattery, Math.max(0, selfConsum - selfPV));
 
       const threshold = 0.1;
-      const availableWidth = (this._cardWidth && this._cardWidth > 0) ? this._cardWidth : (this.offsetWidth || 400);
-      const fullWidth = availableWidth - 40;
+      const measuredWidth = (this._cardWidth && this._cardWidth > 0)
+        ? this._cardWidth
+        : (this.offsetWidth || this.getBoundingClientRect().width || 400);
+      const fullWidth = Math.max(0, measuredWidth - 40);
 
       if (totalFlux <= threshold) {
         return html`<ha-card><div class="compact-container">Waiting for data...</div></ha-card>`;
       }
 
-      // --- GENERATE BAR SEGMENTS (Aggregated by Source) ---
-      // Order: Battery -> Solar -> Grid
+      // Widths are clamped to the remaining space so a bar or bracket row can never
+      // exceed the total, even if the sensors briefly report inconsistent values.
+      const layoutWidth = (val, usedX) => {
+        const remaining = Math.max(0, fullWidth - usedX);
+        return Math.min((val / totalFlux) * fullWidth, remaining);
+      };
+
+      // --- GENERATE BAR SEGMENTS ---
       const barSegments = [];
       let currentX = 0;
 
       const addSegment = (val, color, type, label, entityId) => {
-        if (val <= threshold) return;
-        const pct = val / totalFlux;
-        const width = pct * fullWidth;
+        if (val <= threshold || currentX >= fullWidth) return;
+        const width = layoutWidth(val, currentX);
+        if (width <= 0) return;
         barSegments.push({
           val,
           color,
-          widthPct: pct * 100,
+          widthPct: fullWidth > 0 ? (width / fullWidth) * 100 : 0,
           widthPx: width,
           startPx: currentX,
           type,
@@ -2152,48 +2166,85 @@ console.log(
         currentX += width;
       }
 
-      addSegment(srcBattery, 'var(--neon-green)', 'battery', 'battery', entities.battery);
-      addSegment(srcSolar, 'var(--neon-yellow)', 'solar', 'solar', entities.solar);
-      addSegment(srcGrid, 'var(--neon-blue)', 'grid', 'grid', entities.grid_combined || entities.grid);
+      if (selfUseBar) {
+        // Self consumption view: what is actually used on site, plus the exported surplus
+        addSegment(selfPV, colSolar.bubble, 'solar', 'solar', entities.solar);
+        addSegment(selfBattery, battDischarge.bubble, 'battery', 'battery', entities.battery);
+        addSegment(srcGrid, colGrid.bubble, 'grid', 'grid', entities.grid_combined || entities.grid);
+        addSegment(destExport, colExport.bubble, 'export', 'export', entities.grid_combined || entities.grid_export || entities.grid);
+      } else {
+        addSegment(srcBattery, battDischarge.bubble, 'battery', 'battery', entities.battery);
+        addSegment(srcSolar, colSolar.bubble, 'solar', 'solar', entities.solar);
+        addSegment(srcGrid, colGrid.bubble, 'grid', 'grid', entities.grid_combined || entities.grid);
+      }
 
-      // --- GENERATE TOP BRACKETS (Based on Bar Segments) ---
-      const topBrackets = barSegments.map(s => {
-        const path = this._createBracketPath(s.startPx, s.widthPx, 'down');
-        let icon = '';
-        let iconColor = '';
-        if (s.type === 'solar') { icon = 'mdi:weather-sunny'; iconColor = 'var(--icon-solar-color)'; }
-        if (s.type === 'grid') { icon = 'mdi:transmission-tower'; iconColor = 'var(--icon-grid-color)'; }
-        if (s.type === 'battery') { icon = 'mdi:battery-high'; iconColor = 'var(--icon-battery-color)'; }
+      // color = icon, pipe = bracket line (identical unless a separate pipe color is configured)
+      const bracketMeta = (type) => {
+        if (type === 'solar') return { icon: 'mdi:weather-sunny', color: colSolar.icon, pipe: colSolar.pipe };
+        if (type === 'grid') return { icon: 'mdi:transmission-tower', color: colGrid.icon, pipe: colGrid.pipe };
+        if (type === 'battery') return { icon: 'mdi:battery-high', color: battDischarge.icon, pipe: battDischarge.pipe };
+        if (type === 'export') return { icon: 'mdi:arrow-right-box', color: colExport.icon, pipe: colExport.pipe };
+        return { icon: '', color: '', pipe: '' };
+      };
 
-        return { path, width: s.widthPx, center: s.startPx + (s.widthPx / 2), icon, iconColor, val: s.val, entityId: s.entityId };
-      });
+      // --- GENERATE TOP BRACKETS ---
+      let topBrackets = [];
+      if (selfUseBar) {
+        // Brackets keep showing the full sources while the bar shows their usage
+        let topX = 0;
+        const addTopBracket = (val, type, entityId) => {
+          if (val <= threshold || topX >= fullWidth) return;
+          const width = layoutWidth(val, topX);
+          if (width <= 0) return;
+          const meta = bracketMeta(type);
+          topBrackets.push({
+            path: this._createBracketPath(topX, width, 'down', bracketGap(width)),
+            width, center: topX + (width / 2),
+            icon: meta.icon, iconColor: meta.color, pipeColor: meta.pipe, val, entityId
+          });
+          topX += width;
+        };
+        addTopBracket(srcSolar, 'solar', entities.solar);
+        addTopBracket(srcBattery, 'battery', entities.battery);
+        addTopBracket(srcGrid, 'grid', entities.grid_combined || entities.grid);
+      } else {
+        topBrackets = barSegments.map(s => {
+          const meta = bracketMeta(s.type);
+          return {
+            path: this._createBracketPath(s.startPx, s.widthPx, 'down', bracketGap(s.widthPx)),
+            width: s.widthPx, center: s.startPx + (s.widthPx / 2),
+            icon: meta.icon, iconColor: meta.color, pipeColor: meta.pipe, val: s.val, entityId: s.entityId
+          };
+        });
+      }
 
       // --- GENERATE BOTTOM BRACKETS (Independent Calculation) ---
-      // Order: House -> EV -> Export
       const bottomBrackets = [];
       let bottomX = 0;
 
-      const addBottomBracket = (val, type, entityId = null, iconOverride = null, iconColorOverride = null) => {
-        if (val <= threshold) return;
-        const pct = val / totalFlux;
-        const width = pct * fullWidth;
+      const addBottomBracket = (val, type, entityId = null, iconOverride = null, iconColorOverride = null, pipeColorOverride = null) => {
+        if (val <= threshold || bottomX >= fullWidth) return;
+        const width = layoutWidth(val, bottomX);
+        if (width <= 0) return;
 
         let icon = '';
         let iconColor = '';
+        let pipeColor = '';
 
-        if (type === 'house') { icon = 'mdi:home'; iconColor = 'var(--icon-house-color)'; }
-        if (type === 'export') { icon = 'mdi:arrow-right-box'; iconColor = 'var(--export-color)'; }
-        if (type === 'battery') { icon = 'mdi:battery-charging-high'; iconColor = 'var(--icon-battery-color)'; }
+        if (type === 'house') { icon = 'mdi:home'; iconColor = colHouse.icon; pipeColor = colHouse.pipe; }
+        if (type === 'export') { icon = 'mdi:arrow-right-box'; iconColor = colExport.icon; pipeColor = colExport.pipe; }
+        if (type === 'battery') { icon = 'mdi:battery-charging-high'; iconColor = battCharge.icon; pipeColor = battCharge.pipe; }
         if (iconOverride) { icon = iconOverride; }
-        if (iconColorOverride) { iconColor = iconColorOverride; }
+        if (iconColorOverride) { iconColor = iconColorOverride; pipeColor = pipeColorOverride || iconColorOverride; }
 
-        const path = this._createBracketPath(bottomX, width, 'up');
+        const path = this._createBracketPath(bottomX, width, 'up', bracketGap(width));
         bottomBrackets.push({
           path,
           width: width,
           center: bottomX + (width / 2),
           icon,
           iconColor,
+          pipeColor,
           val,
           entityId
         });
@@ -2201,13 +2252,31 @@ console.log(
       };
 
       addBottomBracket(destHouse, 'house', entities.house);
-      consumers.forEach(c => addBottomBracket(c.power, 'consumer', c.entityId, c.icon, c.iconColor));
-      addBottomBracket(destExport, 'export', entities.grid_combined || entities.grid_export || entities.grid);
-      addBottomBracket(batteryCharge, 'battery', entities.battery);
+      consumers.forEach(c => addBottomBracket(c.power, 'consumer', c.entityId, c.icon, c.iconColor, c.pipeColor));
+      if (selfUseBar) {
+        // Charge sits next to the consumption it belongs to, export closes the row
+        addBottomBracket(batteryCharge, 'battery', entities.battery);
+        addBottomBracket(destExport, 'export', entities.grid_combined || entities.grid_export || entities.grid);
+      } else {
+        addBottomBracket(destExport, 'export', entities.grid_combined || entities.grid_export || entities.grid);
+        addBottomBracket(batteryCharge, 'battery', entities.battery);
+      }
 
-      // Note: If there is Battery Charging happening, bottomX will not reach fullWidth. 
-      // This leaves a gap at the end (or between segments depending on logic), which is visually correct 
-      // as "Internal/Stored Energy" is not an external output.
+      // Labels honour the custom names from the main sections, so no language mix in the details
+      const labelSolar = this.config.solar_label || this._localize('card.label_solar');
+      const labelGrid = this.config.grid_label || this._localize('card.label_grid');
+      const labelBattery = this.config.battery_label || this._localize('card.label_battery');
+      const labelHouse = this.config.house_label || this._localize('card.label_house');
+      const labelExport = this._localize('card.label_export');
+
+      const compactGlow = this.config.compact_glow === true;
+      // A single drop-shadow on the bar avoids clipping inside the rounded wrapper;
+      // it picks up the color of the largest segment.
+      const dominantSegment = barSegments.reduce((max, s) => (!max || s.val > max.val) ? s : max, null);
+      const barGlowStyle = compactGlow && dominantSegment
+        ? `filter: drop-shadow(0 0 6px color-mix(in srgb, ${dominantSegment.color}, transparent 35%));`
+        : '';
+      const iconGlow = (color) => compactGlow ? `filter: drop-shadow(0 0 5px ${color});` : '';
 
       return html`
         <ha-card>
@@ -2215,26 +2284,28 @@ console.log(
                 <!-- TOP BRACKETS -->
                 <div class="compact-bracket">
                     <svg class="bracket-svg" width="100%" height="100%">
-                        ${topBrackets.map(b => this._renderSVGPath(b.path, b.iconColor))}
+                        ${topBrackets.map(b => this._renderSVGPath(b.path, b.pipeColor || b.iconColor, compactGlow))}
                     </svg>
-                    ${topBrackets.map(b => b.width > 20 ? html`
-                    <div class="compact-icon-wrapper" 
-                         style="left: ${b.center}px; transform: translateX(-50%); top: 4px; cursor: ${b.entityId ? 'pointer' : 'default'};"
+                    ${topBrackets.map(b => b.width > minIconWidth ? html`
+                    <div class="compact-icon-wrapper"
+                         style="left: ${b.center}px; transform: translateX(-50%); top: ${topIconTop}; cursor: ${b.entityId ? 'pointer' : 'default'};"
                          title="${this._formatPower(b.val)}"
                          @click=${() => b.entityId && this._handleClick(b.entityId)}>
-                        <ha-icon icon="${b.icon}" class="compact-icon" style="color: ${b.iconColor};"></ha-icon>
+                        <ha-icon icon="${b.icon}" class="compact-icon" style="color: ${b.iconColor}; ${iconGlow(b.iconColor)}"></ha-icon>
                     </div>` : '')}
                 </div>
 
                 <!-- MAIN BAR -->
-                <div class="compact-bar-wrapper">
+                <div class="compact-bar-wrapper" style="${barGlowStyle}">
                     ${barSegments.map(s => {
-                        const textColor = s.type === 'solar' && this.config.color_text_solar ? 'var(--text-solar-color)'
-                          : s.type === 'grid' && this.config.color_text_grid ? 'var(--text-grid-color)'
-                          : s.type === 'battery' && this.config.color_text_battery ? 'var(--text-battery-color)'
-                          : (s.color === 'var(--export-purple)' ? 'white' : 'black');
+                        // Label sits on the colored segment, so it stays black unless a text color is set
+                        const textColor = s.type === 'solar' && this.config.color_text_solar ? colSolar.text
+                          : s.type === 'grid' && this.config.color_text_grid ? colGrid.text
+                          : s.type === 'battery' && this.config.color_text_battery_discharge ? battDischarge.text
+                          : s.type === 'export' && this.config.color_export ? 'white'
+                          : 'black';
                         return html`
-                        <div class="bar-segment" 
+                        <div class="bar-segment"
                              style="width: ${s.widthPct}%; background: ${s.color}; color: ${textColor}; cursor: ${s.entityId ? 'pointer' : 'default'};"
                              title="${this._formatPower(s.val)}"
                              @click=${() => s.entityId && this._handleClick(s.entityId)}>
@@ -2246,14 +2317,14 @@ console.log(
                 <!-- BOTTOM BRACKETS -->
                 <div class="compact-bracket">
                     <svg class="bracket-svg" width="100%" height="100%">
-                        ${bottomBrackets.map(b => this._renderSVGPath(b.path, b.iconColor))}
+                        ${bottomBrackets.map(b => this._renderSVGPath(b.path, b.pipeColor || b.iconColor, compactGlow))}
                     </svg>
-                    ${bottomBrackets.map(b => b.width > 20 ? html`
-                    <div class="compact-icon-wrapper" 
-                         style="left: ${b.center}px; transform: translateX(-50%); top: -3px; cursor: ${b.entityId ? 'pointer' : 'default'};"
+                    ${bottomBrackets.map(b => b.width > minIconWidth ? html`
+                    <div class="compact-icon-wrapper"
+                         style="left: ${b.center}px; transform: translateX(-50%); top: ${bottomIconTop}; cursor: ${b.entityId ? 'pointer' : 'default'};"
                          title="${this._formatPower(b.val)}"
                          @click=${() => b.entityId && this._handleClick(b.entityId)}>
-                        <ha-icon icon="${b.icon}" class="compact-icon" style="color: ${b.iconColor};"></ha-icon>
+                        <ha-icon icon="${b.icon}" class="compact-icon" style="color: ${b.iconColor}; ${iconGlow(b.iconColor)}"></ha-icon>
                     </div>` : '')}
                 </div>
 
@@ -2262,52 +2333,52 @@ console.log(
                 <div class="compact-details">
                     <!-- IN COLUMN -->
                     <div class="compact-details-column">
-                        <div class="compact-details-header">In</div>
+                        <div class="compact-details-header">${this._localize('card.label_in')}</div>
                         ${solar > 0 ? html`
                         <div class="compact-detail-item" @click=${() => entities.solar && this._handleClick(entities.solar)} style="cursor: ${entities.solar ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:weather-sunny" style="color: var(--icon-solar-color);"></ha-icon>
-                            <span class="compact-detail-label">Solar</span>
-                            <span class="compact-detail-value" style="color: var(--text-solar-color, var(--neon-yellow));">${this._formatPower(solar)}</span>
+                            <ha-icon icon="mdi:weather-sunny" style="color: ${colSolar.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${colSolar.secondary};">${labelSolar}</span>
+                            <span class="compact-detail-value" style="color: ${colSolar.text};">${this._formatPower(solar)}</span>
                         </div>` : ''}
                         ${gridImport > 0 ? html`
                         <div class="compact-detail-item" @click=${() => (entities.grid_combined || entities.grid) && this._handleClick(entities.grid_combined || entities.grid)} style="cursor: ${(entities.grid_combined || entities.grid) ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:transmission-tower" style="color: var(--icon-grid-color);"></ha-icon>
-                            <span class="compact-detail-label">Grid</span>
-                            <span class="compact-detail-value" style="color: var(--text-grid-color, var(--neon-blue));">${this._formatPower(gridImport)}</span>
+                            <ha-icon icon="mdi:transmission-tower" style="color: ${colGrid.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${colGrid.secondary};">${labelGrid}</span>
+                            <span class="compact-detail-value" style="color: ${colGrid.text};">${this._formatPower(gridImport)}</span>
                         </div>` : ''}
                         ${batteryDischarge > 0 ? html`
                         <div class="compact-detail-item" @click=${() => entities.battery && this._handleClick(entities.battery)} style="cursor: ${entities.battery ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:battery-arrow-down" style="color: var(--icon-battery-color);"></ha-icon>
-                            <span class="compact-detail-label">Batterie</span>
-                            <span class="compact-detail-value" style="color: var(--text-battery-color, var(--neon-green));">${this._formatPower(batteryDischarge)}</span>
+                            <ha-icon icon="mdi:battery-arrow-down" style="color: ${battDischarge.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${battDischarge.secondary};">${labelBattery}</span>
+                            <span class="compact-detail-value" style="color: ${battDischarge.text};">${this._formatPower(batteryDischarge)}</span>
                         </div>` : ''}
                     </div>
                     <!-- OUT COLUMN -->
                     <div class="compact-details-column">
-                        <div class="compact-details-header">Out</div>
+                        <div class="compact-details-header">${this._localize('card.label_out')}</div>
                         ${destHouse > 0 ? html`
                         <div class="compact-detail-item" @click=${() => entities.house && this._handleClick(entities.house)} style="cursor: ${entities.house ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:home" style="color: var(--icon-house-color);"></ha-icon>
-                            <span class="compact-detail-label">Haus</span>
-                            <span class="compact-detail-value" style="color: var(--text-house-color, var(--neon-pink));">${this._formatPower(destHouse)}</span>
+                            <ha-icon icon="mdi:home" style="color: ${colHouse.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${colHouse.secondary};">${labelHouse}</span>
+                            <span class="compact-detail-value" style="color: ${colHouse.text};">${this._formatPower(destHouse)}</span>
                         </div>` : ''}
                         ${batteryCharge > 0 ? html`
                         <div class="compact-detail-item" @click=${() => entities.battery && this._handleClick(entities.battery)} style="cursor: ${entities.battery ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:battery-arrow-up" style="color: var(--icon-battery-color);"></ha-icon>
-                            <span class="compact-detail-label">Batterie</span>
-                            <span class="compact-detail-value" style="color: var(--text-battery-color, var(--neon-green));">${this._formatPower(batteryCharge)}</span>
+                            <ha-icon icon="mdi:battery-arrow-up" style="color: ${battCharge.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${battCharge.secondary};">${labelBattery}</span>
+                            <span class="compact-detail-value" style="color: ${battCharge.text};">${this._formatPower(batteryCharge)}</span>
                         </div>` : ''}
                         ${consumers.filter(c => c.power > 0).map(c => html`
                         <div class="compact-detail-item" @click=${() => c.entityId && this._handleClick(c.entityId)} style="cursor: ${c.entityId ? 'pointer' : 'default'};">
                             <ha-icon icon="${c.icon}" style="color: ${c.iconColor};"></ha-icon>
-                            <span class="compact-detail-label">${c.label}</span>
+                            <span class="compact-detail-label" style="color: ${c.secondaryColor};">${c.label}</span>
                             <span class="compact-detail-value" style="color: ${c.textColor};">${this._formatPower(c.power)}</span>
                         </div>`)}
                         ${gridExport > 0 ? html`
                         <div class="compact-detail-item" @click=${() => (entities.grid_combined || entities.grid_export || entities.grid) && this._handleClick(entities.grid_combined || entities.grid_export || entities.grid)} style="cursor: ${(entities.grid_combined || entities.grid_export || entities.grid) ? 'pointer' : 'default'};">
-                            <ha-icon icon="mdi:arrow-right-box" style="color: var(--export-color);"></ha-icon>
-                            <span class="compact-detail-label">Export</span>
-                            <span class="compact-detail-value" style="color: var(--export-color);">${this._formatPower(gridExport)}</span>
+                            <ha-icon icon="mdi:arrow-right-box" style="color: ${colExport.icon};"></ha-icon>
+                            <span class="compact-detail-label" style="color: ${colExport.secondary};">${labelExport}</span>
+                            <span class="compact-detail-value" style="color: ${colExport.text};">${this._formatPower(gridExport)}</span>
                         </div>` : ''}
                     </div>
                 </div>` : ''}
@@ -2425,12 +2496,7 @@ console.log(
         return getVal(entity) * (isKw ? 1000 : 1);
       };
       // Consumers 1-5: raw value with optional inversion; negative = consumer feeds the house
-      const getConsumerRaw = (idx) => {
-        const ent = entities[`consumer_${idx}`];
-        let v = ent ? getValKw(ent, this.config[`consumer_${idx}_unit_kw`] === true) : 0;
-        if (this.config[`invert_consumer_${idx}`]) { v *= -1; }
-        return v;
-      };
+      const getConsumerRaw = (idx) => this._getConsumerValue(entities[`consumer_${idx}`], idx);
       const c1Raw = getConsumerRaw(1);
       const c2Raw = getConsumerRaw(2);
       const c3Raw = getConsumerRaw(3);
@@ -2444,12 +2510,13 @@ console.log(
 
       const alwaysShowConsumer = this.config.show_consumer_always === true;
 
-      // Consumer visibility incl. hide-pipe threshold: below threshold the pipe (and the consumer) is hidden
+      // Consumer visibility: the bubble follows the value itself, the pipe threshold only
+      // suppresses the connecting pipe (use the standby threshold to hide a consumer entirely).
       const consumerVisibility = (idx, val) => {
         const ent = entities[`consumer_${idx}`];
         const hidePipe = this.config[`consumer_${idx}_hide_pipe`] === true;
         const threshold = this.config[`consumer_${idx}_pipe_threshold`] || 0;
-        const show = !!(ent && (alwaysShowConsumer || Math.round(val) > (hidePipe ? threshold : 0)));
+        const show = !!(ent && (alwaysShowConsumer || Math.round(val) > 0));
         const pipeActive = show && (!hidePipe || val >= threshold);
         return { show, pipeActive };
       };
@@ -2534,22 +2601,26 @@ console.log(
 
       // Solar→Batt arc only visible when battery is actively charging and not via house.
       // In the diamond layout the arc is part of the ring, so keep it as inactive pipe when inactive pipes are shown.
-      const styleSolarBatt = (hasSolar && hasBattery && !batteryChargeViaHouse && (batteryCharge > 0 || (!hideInactive && isDiamond))) ? '' : 'display: none;';
+      // Solar→Batt arc: reserved whenever the pipe can exist at all. With "hide inactive pipes" off it stays
+      // permanently reserved so the card height never jumps when the charge power crosses zero.
+      const solarBattPossible = hasSolar && hasBattery && !batteryChargeViaHouse;
+      const solarBattVisible = solarBattPossible && (!hideInactive || solarToBatt > 1);
+      const styleSolarBatt = solarBattVisible ? '' : 'display: none;';
       // Grid→Batt pipe: only hide if entities missing; actual visibility handled by getPipeStyle (hideInactive)
       const styleGridBatt = (hasGrid && hasBattery) ? '' : 'display: none;';
 
-      const isTopArcActive = (solarToBatt > 0) && !batteryChargeViaHouse;
       const hasTopRow = hasSolar || hasGrid || hasBattery;
-      // Diamond keeps every main connection inside the same vertical envelope, so no extra headroom needed
-      const topShift = isHorizontal ? 0 : (!hasTopRow ? 190 : (isDiamond ? 50 : ((isTopArcActive || (!hideInactive && hasSolar && hasBattery && batteryCharge > 0 && !batteryChargeViaHouse)) ? 0 : 50)));
+      // Headroom for the solar→battery arc follows the pipe itself, so the layout stays stable
+      // instead of jumping whenever the charge power crosses the visibility threshold.
+      // Diamond keeps every main connection inside the same vertical envelope, so no extra headroom needed.
+      const topShift = isHorizontal ? 0 : (!hasTopRow ? 190 : (isDiamond ? 50 : (solarBattVisible ? 0 : 50)));
       const anyRow2Visible = showC4 || showC5;
       let baseHeight = anyRow2Visible ? 580 : (anyBottomVisible ? 480 : 340);
       const contentHeight = baseHeight - topShift;
 
       // Horizontal: the 50px left lane is only kept while the solar→battery arc is visible,
       // otherwise the content shifts left and fills the card (mirror of the vertical topShift)
-      const showLeftArc = isHorizontal && hasSolar && hasBattery && !batteryChargeViaHouse && batteryCharge > 0 && (solarToBatt > 1 || !hideInactive);
-      const leftShift = isHorizontal && !showLeftArc ? 50 : 0;
+      const leftShift = isHorizontal && !solarBattVisible ? 50 : 0;
       const fullDesignWidth = anyRow2Visible ? 675 : 570;
       const designWidth = isHorizontal ? fullDesignWidth - leftShift : 420;
       const svgWidth = isHorizontal ? fullDesignWidth : designWidth;
@@ -2651,8 +2722,8 @@ console.log(
 
       const solarColor = isSolarActive ? 'var(--icon-solar-color)' : 'var(--secondary-text-color)';
       const gridColor = isGridExporting ? 'var(--export-color)' : (isGridActive ? 'var(--neon-blue)' : 'var(--secondary-text-color)');
-      const gridIconColor = (isGridActive && this.config.color_icon_grid) ? 'var(--icon-grid-color)' : gridColor;
-      const gridTextColor = (isGridActive && this.config.color_text_grid) ? 'var(--text-grid-color)' : gridColor;
+      const gridIconColor = isGridExporting ? 'var(--icon-export-color)' : ((isGridActive && this.config.color_icon_grid) ? 'var(--icon-grid-color)' : gridColor);
+      const gridTextColor = isGridExporting ? 'var(--text-export-color)' : ((isGridActive && this.config.color_text_grid) ? 'var(--text-grid-color)' : gridColor);
 
       const getAnimStyle = (val, opVar = null) => {
         if (val <= 1) return "opacity: 0;";
@@ -2724,11 +2795,18 @@ console.log(
         return html`<div class="sub">${text}</div>`;
       };
 
-      const renderSecondaryOrLabel = (labelText, showLabel, secondaryEntity, hasSecondary, entityKey = null) => {
-        if (hasSecondary) {
-          const secVal = getSecondaryVal(secondaryEntity);
+      // Second and optional third sensor share one line, separated by " / ", and use the secondary color
+      const renderSecondaryOrLabel = (labelText, showLabel, secondaryEntity, hasSecondary, entityKey = null, tertiaryEntity = null) => {
+        const hasTertiary = !!(tertiaryEntity && tertiaryEntity !== "");
+        if (hasSecondary || hasTertiary) {
+          const parts = [];
+          if (hasSecondary) parts.push(getSecondaryVal(secondaryEntity));
+          if (hasTertiary) parts.push(getSecondaryVal(tertiaryEntity));
+          const shown = parts.filter(p => p !== '');
           const secColor = entityKey ? getSecondaryColor(entityKey) : '#888888';
-          return html`<div class="sub secondary-val" style="color: ${secColor};">${secVal}</div>`;
+          // Two values share one line, so they need a smaller type size to stay inside the node
+          const dualClass = shown.length > 1 ? ' dual' : '';
+          return html`<div class="sub secondary-val${dualClass}" style="color: ${secColor};">${shown.join(' / ')}</div>`;
         }
         if (!showLabel) return html``;
         const secColor = entityKey ? getSecondaryColor(entityKey) : null;
@@ -2778,7 +2856,7 @@ console.log(
             <div class="bubble ${shapeClass} ${cssClass} ${nodeClassStr} ${tintClass} ${glowClass}"
                 @click=${() => this._handleClick(entities[configKey])}>
                 ${iconContent}
-                ${renderSecondaryOrLabel(label, true, secEntity, hasSecondary, `secondary_${configKey}`)}
+                ${renderSecondaryOrLabel(label, true, secEntity, hasSecondary, `secondary_${configKey}`, entities[`tertiary_${configKey}`])}
                 <div class="value" style="${textStyle}">${this._formatPower(val)}</div>
             </div>
         `;
@@ -2946,7 +3024,7 @@ console.log(
                     style="${houseBubbleStyle}"
                     @click=${() => this._handleClick(entities.house)}>
                     ${renderMainIcon('house', 0, this.config.house_icon || null, this.config.color_icon_house ? 'var(--icon-house-color)' : houseDominantColor)}
-                    ${renderSecondaryOrLabel(labelHouseText, showLabelHouse, entities.secondary_house, hasSecondaryHouse, 'secondary_house')}
+                    ${renderSecondaryOrLabel(labelHouseText, showLabelHouse, entities.secondary_house, hasSecondaryHouse, 'secondary_house', entities.tertiary_house)}
                     <div class="value" style="${houseTextStyle}">${this._formatPower(houseDisplay)}</div>
                 </div>
 
