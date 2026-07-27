@@ -1104,7 +1104,7 @@ console.log(
                         const textColor = s.type === 'solar' && this.config.color_text_solar ? colSolar.text
                           : s.type === 'grid' && this.config.color_text_grid ? colGrid.text
                           : s.type === 'battery' && this.config.color_text_battery_discharge ? battDischarge.text
-                          : s.type === 'export' && this.config.color_export ? 'white'
+                          : s.type === 'export' && this.config.color_export ? colExport.text
                           : 'black';
                         return html`
                         <div class="bar-segment"
